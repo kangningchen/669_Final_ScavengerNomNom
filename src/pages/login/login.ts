@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from '../register/register'
 import { UserDataProvider } from '../../providers/user-data/user-data';
+import { HomePage } from '../home/home'
 
 /**
  * Generated class for the LoginPage page.
@@ -46,7 +47,7 @@ export class LoginPage {
     if (msg != "success"){
       this.errorMsg = msg;
     } else {
-
+      this.navCtrl.setRoot(HomePage);
     }
   }
 

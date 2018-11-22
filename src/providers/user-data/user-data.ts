@@ -17,9 +17,11 @@ export class UserDataProvider {
   private user: any;
   constructor() {
     firebase.initializeApp(config);
+    this.user = firebase.auth().currentUser;
     this.clientObservable = Observable.create(observerThatWasCreated => {
       this.serviceObserver = observerThatWasCreated;
     });
+    firebase.auth().onAuthStateChanged(user => this.validateUser(user));
   }
 
   public getObservable(): Observable<string> {
@@ -27,25 +29,34 @@ export class UserDataProvider {
   }
 
   private notifySubscribers(authenticated: string): void{
+    // "success" or error message
     this.serviceObserver.next(authenticated);
   }
 
   public createAccount(email: string, password: string, username:string):void {
     firebase.auth().createUserWithEmailAndPassword(email, password).then(
       user => this.updateUserName(user.user, username)
-      ).catch((error) => this.notifySubscribers(error.message)
+    ).catch(
+      (error) => this.notifySubscribers(error.message)
     );
 
   }
 
   public logIn(email: string, password: string):void {
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(error =>this.notifySubscribers(error.message)
+    firebase.auth().signInWithEmailAndPassword(email, password).catch(
+      error =>this.notifySubscribers(error.message)
     );
   }
 
   public getUserName():string {
     if (this.user){
-      return this.user;
+      return this.user.lastName;
+    }
+  }
+
+  public getUserId():string {
+    if (this.user){
+      return this.user.uid;
     }
   }
 
@@ -53,23 +64,16 @@ export class UserDataProvider {
     if (!user){
       return;
     }
-    console.log(user);
-    console.log(firebase.auth().currentUser);
-    console.log(user === firebase.auth().currentUser)
     user.updateProfile({
       displayName: username
     }).then(
       // Update successful.
       this.validateUser(user)
-    ).catch(function(error) {
-      // An error happened.
-      console.log(error.message)
-    });
+    );
   }
   private validateUser(user):void {
     if (user) {
       // User is signed in.
-
       this.notifySubscribers("success");
       this.user = user;
       console.log(this.user);

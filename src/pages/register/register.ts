@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
+import { HomePage } from '../home/home'
+
 /**
  * Generated class for the RegisterPage page.
  *
@@ -45,8 +47,7 @@ export class RegisterPage {
       this.errorMsg = result;
     }
     else {
-      
-      this.navCtrl.pop();
+      this.navCtrl.setRoot(HomePage);
     }
 
   }
