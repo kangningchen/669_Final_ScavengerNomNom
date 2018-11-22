@@ -32,7 +32,7 @@ export class RegisterPage {
     console.log('ionViewDidLoad RegisterPage');
   }
 
-  private registerUser(){
+  private registerUser():void {
     // simple non-empty check
     if (this.email == "" || this.password == "" || this.username == ""){
       this.errorMsg = "Some fields are missing.";
@@ -42,7 +42,7 @@ export class RegisterPage {
 
   }
 
-  private getMessage(result: string){
+  private getMessage(result: string):void {
     if (result != "success"){
       this.errorMsg = result;
     }

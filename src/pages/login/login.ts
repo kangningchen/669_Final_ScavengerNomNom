@@ -31,11 +31,11 @@ export class LoginPage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  private register(){
+  private register():void {
     this.navCtrl.push(RegisterPage);
   }
 
-  private login(){
+  private login():void {
     if (this.email == "" || this.password == ""){
       this.errorMsg = "Some fields are missing."
       return;
@@ -43,7 +43,7 @@ export class LoginPage {
     this.userDataService.logIn(this.email, this.password);
   }
 
-  private getMessage(msg: string){
+  private getMessage(msg: string):void {
     if (msg != "success"){
       this.errorMsg = msg;
     } else {
