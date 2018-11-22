@@ -1,10 +1,10 @@
 export class Post {
 
     location: any; 
-    timestamp: any;
-    expiration: any;
+    timestamp: Date;
+    expiration: Date;
     description: string;
-    image: string;
+    images: string[];
 
     public constructor (private id: number,
                         private title: string) {
@@ -31,15 +31,15 @@ export class Post {
         this.location = location;
     }
 
-    public getPostTimestamp(): any {
+    public getPostTimestamp(): Date {
         return this.timestamp;
     }
 
-    public getExpiration(): any {
+    public getExpiration(): Date {
         return this.expiration;
     }
 
-    public setExpiration(expiration: any): void {
+    public setExpiration(expiration: Date): void {
         this.expiration = expiration;
     }
 
@@ -51,12 +51,12 @@ export class Post {
         this.description = description;
     }
 
-    public getPostImage(): string {
-        return this.image;
+    public getPostImages(): string[] {
+        return this.images;
     }
 
-    public setPostImage(image: string): void {
-        this.image = image;
+    public setPostImages(images: string[]): void {
+        this.images = images;
     }
 
 }
