@@ -1,0 +1,53 @@
+import { Component } from '@angular/core';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { RegisterPage } from '../register/register'
+import { UserDataProvider } from '../../providers/user-data/user-data';
+
+/**
+ * Generated class for the LoginPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
+@IonicPage()
+@Component({
+  selector: 'page-login',
+  templateUrl: 'login.html',
+})
+export class LoginPage {
+  private email:string = "";
+  private password:string = "";
+  private errorMsg:string = "";
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+            private userDataService: UserDataProvider) {
+    this.userDataService.getObservable().subscribe(update=> {
+      this.getMessage(update);
+    });
+  }
+
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad LoginPage');
+  }
+
+  private register(){
+    this.navCtrl.push(RegisterPage);
+  }
+
+  private login(){
+    if (this.email == "" || this.password == ""){
+      this.errorMsg = "Some fields are missing."
+      return;
+    }
+    this.userDataService.logIn(this.email, this.password);
+  }
+
+  private getMessage(msg: string){
+    if (msg != "success"){
+      this.errorMsg = msg;
+    } else {
+
+    }
+  }
+
+}
