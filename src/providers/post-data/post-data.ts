@@ -4,6 +4,7 @@ import { Post } from "../../models/post";
 import { PostManager } from '../../models/postManager';
 import { Observable } from 'rxjs';
 import { Observer } from 'rxjs';
+import firebase from 'firebase';
 /*
   Generated class for the PostDataProvider provider.
 
@@ -16,6 +17,7 @@ export class PostDataProvider {
   private postManager: PostManager;
   private postObservable: Observable<Post[]>;
   private postObserver: Observer<Object>;
+  private db: any;
 
   constructor() {
     console.log('Hello PostDataProvider Provider');
@@ -24,6 +26,14 @@ export class PostDataProvider {
 
     this.postObservable = Observable.create(observer => {
       this.postObserver = observer;
+    });
+
+    this.db = firebase.database();
+    let postRef = this.db.ref('/posts');
+
+    postRef.on('value', snapshot => {
+      this.postManager.initFromFirebase(snapshot);
+      this.notifySubscribers();
     });
 
   }
@@ -42,9 +52,16 @@ export class PostDataProvider {
     this.postObserver.next(postList);
   }
 
-  public addPost(title: string, location: string, timestamp: Date, expirationDate: Date, description: string, images: string[]): void {
-    this.postManager.addPost(title, location, timestamp, expirationDate, description, images);
+  public addPost(title: string, location: string, timestamp: string, expiration: string, description: string, images: string[]): void {
+    this.postManager.addPost(title, location, timestamp, expiration, description, images);
+    this.savePostData();
     this.notifySubscribers();
+  }
+
+  public savePostData(): void {
+    let posts = this.postManager.getPosts();
+    let postRef = this.db.ref('/posts');
+    postRef.set(posts);    
   }
 
 }

@@ -32,9 +32,8 @@ export class PostDetailPage {
 
   publish() {
     console.log(this.title, this.description, this.location, this.expiration);
-    let timestamp = new Date();
-    let expirationDate = new Date(this.expiration);
-    this.postDataService.addPost(this.title, this.location, timestamp, expirationDate, this.description, this.images);
+    let timestamp = new Date().toISOString();
+    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.images);
     this.navCtrl.push(HomePage);
   }
 

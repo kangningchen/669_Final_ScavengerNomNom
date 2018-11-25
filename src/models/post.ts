@@ -2,16 +2,16 @@ export class Post {
   private id: number;
   private title: string;
   private location: any; 
-  private timestamp: Date;
-  private expiration: Date;
+  private timestamp: string;
+  private expiration: string;
   private description: string;
   private images: string[];
 
   public constructor ( id: number,
                        title: string,
                        location: any,
-                       timestamp: Date,
-                       expiration: Date,
+                       timestamp: string,
+                       expiration: string,
                        description: string,
                        images: string[]) {
     this.id = id;
@@ -51,15 +51,15 @@ export class Post {
     this.location = location;
   }
 
-  public getPostTimestamp(): Date {
+  public getPostTimestamp(): string {
     return this.timestamp;
   }
 
-  public getExpiration(): Date {
+  public getExpiration(): string {
     return this.expiration;
   }
 
-  public setExpiration(expiration: Date): void {
+  public setExpiration(expiration: string): void {
     this.expiration = expiration;
   }
 
