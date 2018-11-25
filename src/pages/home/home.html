@@ -1,14 +1,47 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
+    <!-- <ion-title>
+      ScavengerNomNom
+    </ion-title> -->
+    <button ion-button clear small float-right (click)="addPost()">
+      POST
+    </button>
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content>
+  <ion-card *ngFor="let post of postList">
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="../../assets/imgs/avatar.jpg">
+      </ion-avatar>
+      <h2>{{ post.getPostTitle() }}</h2>
+      <ion-note>Jack Doe</ion-note>
+      <ion-note>{{ post.getPostTimestamp().toISOString()}}</ion-note>
+    </ion-item>
+    <ion-card-content>
+        <p>{{ post.getPostDescription() }}</p>
+      </ion-card-content>
+    <img src="../../assets/imgs/placeholder.png">
+    <ion-row>
+      <ion-col>
+        <button ion-button icon-start clear small>
+          <ion-icon name="thumbs-up"></ion-icon>
+          <div>12 Likes</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-start clear small>
+          <ion-icon name="text"></ion-icon>
+          <div>4 Comments</div>
+        </button>
+      </ion-col>
+      <ion-col>
+        <button ion-button icon-start clear small>
+          <ion-icon name="compass"></ion-icon>
+          <div>0.5 mi</div>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-card>
 </ion-content>

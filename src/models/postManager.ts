@@ -1,6 +1,6 @@
 import { Post } from './post';
 
-export class postManager {
+export class PostManager {
   
   private posts: Object = {};
  
@@ -24,6 +24,7 @@ export class postManager {
     for (let k in this.posts) {
       postList.push(this.posts[k]);
     }
+    console.log('triggered')
     return postList;
   }
 
@@ -40,6 +41,7 @@ export class postManager {
     let id = this.getNextPostId();
     let post = new Post (id, title, location, timestamp, expiration, description, images);
     this.posts[id] = post;
+    console.log('Hey', this.posts);
     return post;
   }
 
