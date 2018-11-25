@@ -1,5 +1,5 @@
 export class Post {
-  private id: number;
+  private key: string;
   private title: string;
   private location: any; 
   private timestamp: string;
@@ -7,14 +7,14 @@ export class Post {
   private description: string;
   private images: string[];
 
-  public constructor ( id: number,
+  public constructor ( key: string,
                        title: string,
                        location: any,
                        timestamp: string,
                        expiration: string,
                        description: string,
                        images: string[]) {
-    this.id = id;
+    this.key = key;
     this.title = title;
     this.location = location;
     this.timestamp = timestamp;
@@ -31,8 +31,9 @@ export class Post {
   public initFromJSON(json: Object) {
 
   }
-  public getPostId(): number {
-    return this.id;
+  
+  public getPostKey(): string {
+    return this.key;
   }
 
   public getPostTitle(): string {

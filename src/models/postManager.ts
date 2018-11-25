@@ -10,20 +10,15 @@ export class PostManager {
 
   public initFromFirebase(snapshot): void {
     snapshot.forEach( childSnapshot => {
-      let post = new Post (childSnapshot.val().id, childSnapshot.val().title, childSnapshot.val().location, childSnapshot.val().timestamp, childSnapshot.val().expiration, childSnapshot.val().description, childSnapshot.val().images);
-      this.posts[childSnapshot.val().id] = post;
+      let post = new Post(childSnapshot.key,
+                          childSnapshot.val().title,
+                          childSnapshot.val().location, 
+                          childSnapshot.val().timestamp, 
+                          childSnapshot.val().expiration, 
+                          childSnapshot.val().description, 
+                          childSnapshot.val().images);
+      this.posts[childSnapshot.key] = post;
     });
-  }
-
-  private getNextPostId(): number {
-    let maxId = -1;
-    for (let k in this.posts) {
-      let postId = this.posts[k].getPostId();
-      if ( postId > maxId) {
-        maxId = postId;
-      }
-    }
-    return ++maxId;
   }
 
   public getPosts(): Object {
@@ -38,28 +33,28 @@ export class PostManager {
     return postList;
   }
 
-  public getPostById(id: number): Post {
-    return this.posts[id];
+  public getPostByKey(key: string): Post {
+    return this.posts[key];
   }
 
-  public addPost(title: string,
+  public addPost(key: string,
+                title: string,
                 location: any = null,
                 timestamp: string = "",
                 expiration: string = "",
                 description: string = "",
                 images: string[]= new Array<string>()): Post {
-    let id = this.getNextPostId();
-    let post = new Post (id, title, location, timestamp, expiration, description, images);
-    this.posts[id] = post;
+    let post = new Post (key, title, location, timestamp, expiration, description, images);
+    this.posts[key] = post;
     return post;
   }
 
   public removePost(post: Post): void {
-    delete this.posts[post.getPostId()];
+    delete this.posts[post.getPostKey()];
   }
 
-  public removePostById(id: number): void {
-    delete this.posts[id];
+  public removePostByKey(key: string): void {
+    delete this.posts[key];
   }
 
 }

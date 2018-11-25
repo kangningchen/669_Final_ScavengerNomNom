@@ -53,15 +53,18 @@ export class PostDataProvider {
   }
 
   public addPost(title: string, location: string, timestamp: string, expiration: string, description: string, images: string[]): void {
-    this.postManager.addPost(title, location, timestamp, expiration, description, images);
-    this.savePostData();
-    this.notifySubscribers();
-  }
-
-  public savePostData(): void {
-    let posts = this.postManager.getPosts();
     let postRef = this.db.ref('/posts');
-    postRef.set(posts);    
+    let postDataRef = postRef.push();
+    let key = postDataRef.getKey();
+    let post = this.postManager.addPost(key,
+                                        title,
+                                        location, 
+                                        timestamp, 
+                                        expiration, 
+                                        description, 
+                                        images);
+    postDataRef.set(post);
+    this.notifySubscribers();
   }
 
 }
