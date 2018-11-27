@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs';
 import firebase from 'firebase';
-declare var config;
 
 /*
   Generated class for the UserDataProvider provider.
@@ -16,7 +15,6 @@ export class UserDataProvider {
   private clientObservable: Observable<string>;
   private user: any;
   constructor() {
-    firebase.initializeApp(config);
     this.user = firebase.auth().currentUser;
     this.clientObservable = Observable.create(observerThatWasCreated => {
       this.serviceObserver = observerThatWasCreated;
