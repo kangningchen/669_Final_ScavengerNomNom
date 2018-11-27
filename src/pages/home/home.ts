@@ -39,12 +39,17 @@ export class HomePage {
     this.navCtrl.push(ViewDetailPage, {"postKey": postKey});
   }
 
-  sortPost(): void {
+  sortPost(cbox:Checkbox){
+    if (cbox.checked != true){
+      this.postList.sort(function(a,b){
+        return new Date(Date.parse(a.timestamp)).getTime() - new Date(Date.parse(b.timestamp)).getTime();
+      })}
+      else{
     this.postList.sort(function(a,b){
       // console.log(b.expiration)
       return new Date(Date.parse(b.expiration)).getTime() - new Date(Date.parse(a.expiration)).getTime();
     })
-  }
+  }}
 
   filterPost(cbox:Checkbox){
     if (cbox.checked != true){
