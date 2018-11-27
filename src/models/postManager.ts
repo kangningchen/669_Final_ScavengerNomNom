@@ -41,7 +41,7 @@ export class PostManager {
                 title: string,
                 location: any = null,
                 timestamp: string = "",
-                expiration: string = "",
+                expiration: any,
                 description: string = "",
                 images: string[]= new Array<string>()): Post {
     let post = new Post (key, title, location, timestamp, expiration, description, images);
