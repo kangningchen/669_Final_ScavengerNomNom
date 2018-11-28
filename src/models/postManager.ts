@@ -1,9 +1,9 @@
 import { Post } from './post';
 
 export class PostManager {
-  
+
   private posts: Object = {};
- 
+
   public constructor () {
 
   }
@@ -12,11 +12,12 @@ export class PostManager {
     snapshot.forEach( childSnapshot => {
       let post = new Post(childSnapshot.key,
                           childSnapshot.val().title,
-                          childSnapshot.val().location, 
-                          childSnapshot.val().timestamp, 
-                          childSnapshot.val().expiration, 
-                          childSnapshot.val().description, 
-                          childSnapshot.val().images);
+                          childSnapshot.val().location,
+                          childSnapshot.val().timestamp,
+                          childSnapshot.val().expiration,
+                          childSnapshot.val().description,
+                          childSnapshot.val().images,
+                          childSnapshot.val().userId);
       this.posts[childSnapshot.key] = post;
     });
   }
@@ -43,8 +44,10 @@ export class PostManager {
                 timestamp: string = "",
                 expiration: string = "",
                 description: string = "",
-                images: string[]= new Array<string>()): Post {
-    let post = new Post (key, title, location, timestamp, expiration, description, images);
+                images: string[]= new Array<string>(),
+                userId: string=""
+               ): Post {
+    let post = new Post (key, title, location, timestamp, expiration, description, images,userId);
     this.posts[key] = post;
     return post;
   }
@@ -56,5 +59,8 @@ export class PostManager {
   public removePostByKey(key: string): void {
     delete this.posts[key];
   }
+
+
+  // public updatePost(){}
 
 }

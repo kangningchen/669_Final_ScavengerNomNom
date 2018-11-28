@@ -11,6 +11,7 @@ import { RegisterPage } from '../pages/register/register';
 import { PostDetailPage } from '../pages/post-detail/post-detail';
 import { UserDataProvider } from '../providers/user-data/user-data';
 import { PostDataProvider } from '../providers/post-data/post-data';
+import { EditPage } from '../pages/edit/edit';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PostDataProvider } from '../providers/post-data/post-data';
     HomePage,
     PostDetailPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    EditPage
   ],
   imports: [
     BrowserModule,
@@ -30,7 +32,8 @@ import { PostDataProvider } from '../providers/post-data/post-data';
     HomePage,
     PostDetailPage,
     LoginPage,
-    RegisterPage
+    RegisterPage,
+    EditPage
   ],
   providers: [
     StatusBar,

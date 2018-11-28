@@ -10,7 +10,12 @@
 </ion-header>
 
 <ion-content>
+
+  <h1>Welcome, {{userId}}</h1>
   <ion-card *ngFor="let post of postList">
+
+
+
     <ion-item>
       <ion-avatar item-start>
         <img src="../../assets/imgs/avatar.jpg">
@@ -42,6 +47,14 @@
           <div>0.5 mi</div>
         </button>
       </ion-col>
+      <div *ngIf="post.userId==this.userId">
+      <ion-col>
+        <button ion-button icon-start clear small (click)=editPost(post.key)>
+          <ion-icon name="switch">Edit</ion-icon>
+        </button>
+        </ion-col>
+      </div>
     </ion-row>
   </ion-card>
+<!-- </ng-template> -->
 </ion-content>
