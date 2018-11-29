@@ -39,23 +39,27 @@ export class ViewDetailPage {
   ionViewWillLeave() {
     clearInterval(this.timeCounterInterval);
   }
-  public getTimeRest():any{
+  public getTimeRest():any {
     var r = new Date(Date.parse(this.post.expiration)).getTime();
-    this.timeCounterInterval = setInterval(window.onload = function() {
-
+    this.timeCounterInterval = setInterval(() => {
+      this.countDown(r);
+      
+    }, 1000);
+  }
+  public countDown(expiration: number):any {
       var now = new Date().getTime();
-      var distance = r - now;
+      var distance = expiration - now;
+      console.log(distance);
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      document.getElementById("countDown").innerHTML = hours + "h "
+      window.document.getElementById("countDown").innerHTML = hours + "h "
       + minutes + "m " + seconds + "s ";
+      console.log("here");
       if (distance < 0) {
         clearInterval(this.timeCounterInterval);
-        document.getElementById("countDown").innerHTML = "EXPIRED";
+        window.document.getElementById("countDown").innerHTML = "EXPIRED";
       }
-    }, 1000);
   }
-
 }
