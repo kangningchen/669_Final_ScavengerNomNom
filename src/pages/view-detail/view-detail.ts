@@ -21,13 +21,14 @@ import { PostManager } from '../../models/postManager';
 export class ViewDetailPage {
   private post: Post;
   private postList: Post[];
+  private timeCounterInterval: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private postDataService: PostDataProvider) {
     let postKey = this.navParams.get("postKey");
     console.log("nav:"+postKey);
      
     this.post = this.postDataService.getPostByKey(postKey);
-    this.getTimeRest()
+    this.getTimeRest();
     console.log(this.post);
 
   }
@@ -35,11 +36,13 @@ export class ViewDetailPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ViewDetailPage');
   }
-
+  ionViewWillLeave() {
+    clearInterval(this.timeCounterInterval);
+  }
   public getTimeRest():any{
     var r = new Date(Date.parse(this.post.expiration)).getTime();
-    var x = setInterval(window.onload = function() {
-      clearInterval(x);
+    this.timeCounterInterval = setInterval(window.onload = function() {
+
       var now = new Date().getTime();
       var distance = r - now;
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -47,11 +50,11 @@ export class ViewDetailPage {
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       document.getElementById("countDown").innerHTML = hours + "h "
-    + minutes + "m " + seconds + "s ";
-    if (distance < 0) {
-      clearInterval(x);
-      document.getElementById("countDown").innerHTML = "EXPIRED";
-  }
+      + minutes + "m " + seconds + "s ";
+      if (distance < 0) {
+        clearInterval(this.timeCounterInterval);
+        document.getElementById("countDown").innerHTML = "EXPIRED";
+      }
     }, 1000);
   }
 
