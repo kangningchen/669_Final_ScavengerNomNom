@@ -76,18 +76,19 @@ export class PostDataProvider {
     this.notifySubscribers();
   }
 
- public getPost(key:string){
-   return this.postManager.getPostByKey(key);
- }
+  public getPost(key:string){
+    return this.postManager.getPostByKey(key);
+  }
 
- public removePost(post:any){
-   this.postManager.removePost(post);
- }
+  public removePost(post:any){
+    this.postManager.removePost(post);
+    this.notifySubscribers();
+  }
 
- public updatePost(key:string,post: Post): void {
-   let parentRef = this.db.ref('/posts');
-   let childRef = parentRef.child(key);
-   childRef.set({key:key,
+  public updatePost(key:string,post: Post): void {
+    let parentRef = this.db.ref('/posts');
+    let childRef = parentRef.child(key);
+    childRef.set({key:key,
                  title:post.getPostTitle(),
                  location:post.getLocation(),
                  timestamp:post.getPostTimestamp(),
@@ -96,6 +97,6 @@ export class PostDataProvider {
                  images:post.getPostImages(),
                  userId:post.getUserId()
        });
- }
+  }
 
-s}
+}
