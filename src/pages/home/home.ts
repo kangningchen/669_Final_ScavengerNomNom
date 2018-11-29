@@ -21,6 +21,8 @@ export class HomePage {
   constructor(public navCtrl: NavController, private postDataService: PostDataProvider) {
     this.postDataService.getPostObservable().subscribe( postList => {
       this.postList = postList;
+      this.postList.sort(function(a,b){
+        return new Date(Date.parse(b.timestamp)).getTime() - new Date(Date.parse(a.timestamp)).getTime();})
       this.filteredList = this.postList;
     });
     this.postList = this.postDataService.getPostList();
@@ -45,7 +47,7 @@ export class HomePage {
   sortPost(cbox:Checkbox){
     if (cbox.checked != true){
       this.postList.sort(function(a,b){
-        return new Date(Date.parse(a.timestamp)).getTime() - new Date(Date.parse(b.timestamp)).getTime();
+        return new Date(Date.parse(b.timestamp)).getTime() - new Date(Date.parse(a.timestamp)).getTime();
       })}
       else{
     this.postList.sort(function(a,b){
