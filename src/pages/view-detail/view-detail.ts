@@ -22,7 +22,7 @@ export class ViewDetailPage {
   private post: Post;
   private postList: Post[];
   private timeCounterInterval: any;
-
+  private countDownString = "";
   constructor(public navCtrl: NavController, public navParams: NavParams, private postDataService: PostDataProvider) {
     let postKey = this.navParams.get("postKey");
     console.log("nav:"+postKey);
@@ -49,17 +49,17 @@ export class ViewDetailPage {
   public countDown(expiration: number):any {
       var now = new Date().getTime();
       var distance = expiration - now;
-      console.log(distance);
+
       var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
       var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      window.document.getElementById("countDown").innerHTML = hours + "h "
+      this.countDownString = hours + "h "
       + minutes + "m " + seconds + "s ";
-      console.log("here");
+
       if (distance < 0) {
         clearInterval(this.timeCounterInterval);
-        window.document.getElementById("countDown").innerHTML = "EXPIRED";
+        this.countDownString = "EXPIRED";
       }
   }
 }
