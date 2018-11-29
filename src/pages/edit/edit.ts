@@ -36,7 +36,7 @@ export class EditPage {
   update() {
 
     this.postDataService.updatePost(this.post.key,this.post);
-    this.navCtrl.push(HomePage);
+    this.navCtrl.pop();
   }
 
   delete(){

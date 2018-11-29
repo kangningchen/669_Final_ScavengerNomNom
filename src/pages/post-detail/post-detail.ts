@@ -43,7 +43,7 @@ export class PostDetailPage {
     console.log(this.userId);
     let timestamp = new Date().toISOString();
     this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.images,this.userId);
-    this.navCtrl.push(HomePage);
+    this.navCtrl.pop();
   }
 
 }

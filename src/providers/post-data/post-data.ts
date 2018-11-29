@@ -78,7 +78,6 @@ export class PostDataProvider {
  }
 
  public updatePost(key:string,post: Post): void {
-   let timestamp = new Date().toISOString();
    let parentRef = this.db.ref('/posts');
    let childRef = parentRef.child(key);
    childRef.set({key:key,
