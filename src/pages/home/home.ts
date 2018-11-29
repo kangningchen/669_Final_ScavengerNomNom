@@ -26,7 +26,7 @@ export class HomePage {
     this.postDataService.getPostObservable().subscribe( postList => {
       this.postList = postList;
       this.postList.sort(function(a,b){
-        return new Date(Date.parse(b.timestamp)).getTime() - new Date(Date.parse(a.timestamp)).getTime();})
+        return new Date(Date.parse(b.getPostTimestamp())).getTime() - new Date(Date.parse(a.getPostTimestamp())).getTime();})
       this.filteredList = this.postList;
     });
     this.postList = this.postDataService.getPostList();
@@ -57,12 +57,12 @@ export class HomePage {
   sortPost(cbox:Checkbox){
     if (cbox.checked != true){
       this.postList.sort(function(a,b){
-        return new Date(Date.parse(b.timestamp)).getTime() - new Date(Date.parse(a.timestamp)).getTime();
+        return new Date(Date.parse(b.getPostTimestamp())).getTime() - new Date(Date.parse(a.getPostTimestamp())).getTime();
       })}
       else{
     this.postList.sort(function(a,b){
       // console.log(b.expiration)
-      return new Date(Date.parse(b.expiration)).getTime() - new Date(Date.parse(a.expiration)).getTime();
+      return new Date(Date.parse(b.getExpiration())).getTime() - new Date(Date.parse(a.getExpiration())).getTime();
     })
   }}
 
@@ -71,7 +71,7 @@ export class HomePage {
       this.filteredList = this.postList
     }else{
     this.filteredList = this.postList.filter((post) => {
-      return Date.parse(post.expiration) > Date.now();}
+      return Date.parse(post.getExpiration()) > Date.now();}
     );
 }
 }

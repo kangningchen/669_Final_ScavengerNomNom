@@ -40,26 +40,26 @@ export class ViewDetailPage {
     clearInterval(this.timeCounterInterval);
   }
   public getTimeRest():any {
-    var r = new Date(Date.parse(this.post.expiration)).getTime();
+    var r = new Date(Date.parse(this.post.getExpiration())).getTime();
     this.timeCounterInterval = setInterval(() => {
       this.countDown(r);
       
     }, 1000);
   }
   public countDown(expiration: number):any {
-      var now = new Date().getTime();
-      var distance = expiration - now;
+    var now = new Date().getTime();
+    var distance = expiration - now;
 
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      this.countDownString = hours + "h "
-      + minutes + "m " + seconds + "s ";
+    this.countDownString = hours + "h "
+    + minutes + "m " + seconds + "s ";
 
-      if (distance < 0) {
-        clearInterval(this.timeCounterInterval);
-        this.countDownString = "EXPIRED";
-      }
+    if (distance < 0) {
+      clearInterval(this.timeCounterInterval);
+      this.countDownString = "EXPIRED";
+    }
   }
 }
