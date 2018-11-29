@@ -3,8 +3,10 @@ import { NavController, Checkbox } from 'ionic-angular';
 import { Post } from '../../models/post';
 // import { PostManager } from '../../models/postManager';
 import { PostDetailPage } from '../post-detail/post-detail';
+import { EditPage } from '../edit/edit';
 import { ViewDetailPage } from '../view-detail/view-detail';
 import { PostDataProvider } from "../../providers/post-data/post-data";
+import { UserDataProvider } from "../../providers/user-data/user-data";
 
 @Component({
   selector: 'page-home',
@@ -14,11 +16,13 @@ import { PostDataProvider } from "../../providers/post-data/post-data";
 export class HomePage {
 
   private postList: Post[];
+  private user: any;
+  private userId:string;
   private filteredList: Post[];
   public aColor: string = "#f9f9f9";
 
 
-  constructor(public navCtrl: NavController, private postDataService: PostDataProvider) {
+  constructor(public navCtrl: NavController, private postDataService: PostDataProvider, private userDataService:UserDataProvider) {
     this.postDataService.getPostObservable().subscribe( postList => {
       this.postList = postList;
       this.postList.sort(function(a,b){
@@ -26,13 +30,15 @@ export class HomePage {
       this.filteredList = this.postList;
     });
     this.postList = this.postDataService.getPostList();
+
+    this.userId = this.userDataService.getUserId();
     this.filteredList = this.postList;
-    
-    
+
   }
 
   ngOnInit() {
     this.postList = this.postDataService.getPostList();
+    this.userId = this.userDataService.getUserId();
     
   }
 
@@ -40,6 +46,10 @@ export class HomePage {
     this.navCtrl.push(PostDetailPage);
   }
 
+  editPost(key:string){
+    this.navCtrl.push(EditPage,{"key":key});
+  }
+  
   viewPost(postKey: string) {
     this.navCtrl.push(ViewDetailPage, {"postKey": postKey});
   }

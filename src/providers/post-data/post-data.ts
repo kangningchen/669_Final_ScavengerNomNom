@@ -58,19 +58,44 @@ export class PostDataProvider {
     this.postObserver.next(postList);
   }
 
-  public addPost(title: string, location: string, timestamp: string, expiration: any, description: string, images: string[]): void {
+  public addPost(title: string, location: string, timestamp: string, expiration: string, description: string, images: string[], userId:string
+  ): void {
+
     let postRef = this.db.ref('/posts');
     let postDataRef = postRef.push();
     let key = postDataRef.getKey();
     let post = this.postManager.addPost(key,
                                         title,
-                                        location, 
-                                        timestamp, 
-                                        expiration, 
-                                        description, 
-                                        images);
+                                        location,
+                                        timestamp,
+                                        expiration,
+                                        description,
+                                        images,
+                                        userId);
     postDataRef.set(post);
     this.notifySubscribers();
   }
 
-}
+ public getPost(key:string){
+   return this.postManager.getPostByKey(key);
+ }
+
+ public removePost(post:any){
+   this.postManager.removePost(post);
+ }
+
+ public updatePost(key:string,post: Post): void {
+   let parentRef = this.db.ref('/posts');
+   let childRef = parentRef.child(key);
+   childRef.set({key:key,
+                 title:post.getPostTitle(),
+                 location:post.getLocation(),
+                 timestamp:post.getPostTimestamp(),
+                 expiration:post.getExpiration(),
+                 description:post.getPostDescription(),
+                 images:post.getPostImages(),
+                 userId:post.getUserId()
+       });
+ }
+
+s}

@@ -11,6 +11,7 @@ import { RegisterPage } from '../pages/register/register';
 import { PostDetailPage } from '../pages/post-detail/post-detail';
 import { UserDataProvider } from '../providers/user-data/user-data';
 import { PostDataProvider } from '../providers/post-data/post-data';
+import { EditPage } from '../pages/edit/edit';
 import { ViewDetailPage } from '../pages/view-detail/view-detail';
 import { ViewDetailPageModule } from '../pages/view-detail/view-detail.module';
 
@@ -21,6 +22,7 @@ import { ViewDetailPageModule } from '../pages/view-detail/view-detail.module';
     PostDetailPage,
     LoginPage,
     RegisterPage,
+    EditPage,
     ViewDetailPage
   ],
   imports: [
@@ -34,6 +36,7 @@ import { ViewDetailPageModule } from '../pages/view-detail/view-detail.module';
     PostDetailPage,
     LoginPage,
     RegisterPage,
+    EditPage,
     ViewDetailPage
   ],
   providers: [

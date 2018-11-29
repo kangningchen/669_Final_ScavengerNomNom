@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { PostDataProvider } from "../../providers/post-data/post-data";
+import { UserDataProvider } from "../../providers/user-data/user-data";
+
 // import { Camera, CameraOptions } from '@ionic-native/camera';
 /**
  * Generated class for the PostDetailPage page.
@@ -22,8 +24,15 @@ export class PostDetailPage {
   private location: any = "";
   private expiration: string = "";
   private images: string[] = [""];
+  private userId: string="";
+  private user: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private postDataService: PostDataProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private postDataService: PostDataProvider,private userDataService:UserDataProvider) {
+    this.userDataService.getObservable().subscribe( user => {
+      this.user = user;
+    });
+    this.userId = this.userDataService.getUserId();
+
   }
 
   ionViewDidLoad() {
@@ -31,10 +40,10 @@ export class PostDetailPage {
   }
 
   publish() {
-    console.log(this.title, this.description, this.location, this.expiration);
+    console.log(this.userId);
     let timestamp = new Date().toISOString();
-    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.images);
-    this.navCtrl.push(HomePage);
+    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.images,this.userId);
+    this.navCtrl.pop();
   }
 
 }

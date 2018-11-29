@@ -1,11 +1,15 @@
 export class Post {
   private key: string;
   private title: string;
-  private location: any; 
-  public timestamp: string;
-  public expiration: string;
+
+  private location: any;
+  private timestamp: string;
+  private expiration: string;
+
   private description: string;
   private images: string[];
+  private userId: string;
+
 
   public constructor ( key: string,
                        title: string,
@@ -13,7 +17,8 @@ export class Post {
                        timestamp: string,
                        expiration: string,
                        description: string,
-                       images: string[]) {
+                       images: string[],
+                       userId:string) {
     this.key = key;
     this.title = title;
     this.location = location;
@@ -24,14 +29,14 @@ export class Post {
         this.images = images.slice(0);
     } else {
         this.images = new Array<string>();
-    }
-
+    };
+    this.userId=userId
   }
 
   public initFromJSON(json: Object) {
 
   }
-  
+
   public getPostKey(): string {
     return this.key;
   }
@@ -84,5 +89,13 @@ export class Post {
     }
 
   }
+  public setUserId(userId: string): void {
+    this.userId = userId;
+  }
+
+  public getUserId(): string {
+    return this.userId;
+  }
+
 
 }
