@@ -19,6 +19,7 @@ export class PostDataProvider {
   private postObserver: Observer<Object>;
   private db: any;
 
+
   constructor() {
     console.log('Hello PostDataProvider Provider');
 
@@ -35,12 +36,17 @@ export class PostDataProvider {
       this.postManager.initFromFirebase(snapshot);
       this.notifySubscribers();
     });
-
   }
+
 
   public getPostList(): Post[] {
     let postList = this.postManager.getPostList();
     return postList;
+  }
+
+  public getPostByKey(key: string): Post {
+    let post = this.postManager.getPostByKey(key);
+    return post;
   }
 
   public getPostObservable(): Observable<Post[]> {
@@ -52,7 +58,7 @@ export class PostDataProvider {
     this.postObserver.next(postList);
   }
 
-  public addPost(title: string, location: string, timestamp: string, expiration: string, description: string, images: string[]): void {
+  public addPost(title: string, location: string, timestamp: string, expiration: any, description: string, images: string[]): void {
     let postRef = this.db.ref('/posts');
     let postDataRef = postRef.push();
     let key = postDataRef.getKey();
