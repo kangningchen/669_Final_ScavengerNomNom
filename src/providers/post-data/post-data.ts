@@ -82,13 +82,13 @@ export class PostDataProvider {
    let parentRef = this.db.ref('/posts');
    let childRef = parentRef.child(key);
    childRef.set({key:key,
-                 title:post.title,
-                 location:post.location,
-                 timestamp:timestamp,
-                 expiration:post.expiration,
-                 description:post.description,
-                 images:post.images,
-                 userId:post.userId
+                 title:post.getPostTitle(),
+                 location:post.getLocation(),
+                 timestamp:post.getPostTimestamp(),
+                 expiration:post.getExpiration(),
+                 description:post.getPostDescription(),
+                 images:post.getPostImages(),
+                 userId:post.getUserId()
        });
  }
 
