@@ -15,6 +15,7 @@ export class HomePage {
 
   private postList: Post[];
   private filteredList: Post[];
+  public aColor: string = "#f9f9f9";
 
 
   constructor(public navCtrl: NavController, private postDataService: PostDataProvider) {
@@ -24,6 +25,8 @@ export class HomePage {
     });
     this.postList = this.postDataService.getPostList();
     this.filteredList = this.postList;
+    
+    
   }
 
   ngOnInit() {
@@ -60,5 +63,7 @@ export class HomePage {
     );
 }
 }
+
+
 
 }
