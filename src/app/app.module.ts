@@ -12,6 +12,8 @@ import { PostDetailPage } from '../pages/post-detail/post-detail';
 import { UserDataProvider } from '../providers/user-data/user-data';
 import { PostDataProvider } from '../providers/post-data/post-data';
 import { EditPage } from '../pages/edit/edit';
+import { ViewDetailPage } from '../pages/view-detail/view-detail';
+import { ViewDetailPageModule } from '../pages/view-detail/view-detail.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { EditPage } from '../pages/edit/edit';
     PostDetailPage,
     LoginPage,
     RegisterPage,
-    EditPage
+    EditPage,
+    ViewDetailPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +36,8 @@ import { EditPage } from '../pages/edit/edit';
     PostDetailPage,
     LoginPage,
     RegisterPage,
-    EditPage
+    EditPage,
+    ViewDetailPage
   ],
   providers: [
     StatusBar,

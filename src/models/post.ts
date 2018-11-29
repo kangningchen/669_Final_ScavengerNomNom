@@ -1,9 +1,11 @@
 export class Post {
   private key: string;
   private title: string;
+
   private location: any;
   private timestamp: string;
   private expiration: string;
+
   private description: string;
   private images: string[];
   private userId: string;
@@ -62,7 +64,7 @@ export class Post {
   public getExpiration(): string {
     return this.expiration;
   }
-
+  
   public setExpiration(expiration: string): void {
     this.expiration = expiration;
   }

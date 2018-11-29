@@ -42,7 +42,7 @@ export class PostManager {
                 title: string,
                 location: any = null,
                 timestamp: string = "",
-                expiration: string = "",
+                expiration: string,
                 description: string = "",
                 images: string[]= new Array<string>(),
                 userId: string=""
