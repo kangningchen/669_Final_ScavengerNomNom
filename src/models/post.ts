@@ -1,3 +1,5 @@
+import { Comment } from './comment';
+
 export class Post {
   private key: string;
   private title: string;
@@ -9,6 +11,7 @@ export class Post {
   private description: string;
   private image: string;
   private userId: string;
+  private comments: Object = {};
 
 
   public constructor ( key: string,
@@ -97,6 +100,44 @@ export class Post {
 
   public getUserId(): string {
     return this.userId;
+  }
+
+  // comment management
+
+  public getComments(): Object {
+    return this.comments;
+  }
+
+  public getCommentList(): Comment[] {
+    let commentList: Comment[] = [];
+    for (let k in this.comments) {
+      commentList.push(this.comments[k]);
+    }
+    return commentList;
+  }
+
+  public getCommentByKey(key: string): Post {
+    return this.comments[key];
+  }
+
+  public addComment(key: string,
+                    userId: string,
+                    username: string,
+                    avatar: string,
+                    timestamp: string,
+                    text:string): Comment {
+    let comment = new Comment (key, userId, username, avatar, timestamp, text);
+    this.comments[key] = comment;
+    console.log('Added comment:', comment)
+    return comment;
+  }
+
+  public removeComment(comment: Comment): void {
+    delete this.comments[comment.getCommentKey()];
+  }
+
+  public removeCommentByKey(key: string): void {
+    delete this.comments[key];
   }
 
 

@@ -45,8 +45,7 @@ export class PostManager {
                 expiration: string,
                 description: string = "",
                 image: string = "",
-                userId: string= ""
-               ): Post {
+                userId: string= ""): Post {
     let post = new Post (key, title, location, timestamp, expiration, description, image,userId);
     this.posts[key] = post;
     console.log('hey', post)
