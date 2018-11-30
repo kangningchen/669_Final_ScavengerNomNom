@@ -7,7 +7,7 @@ export class Post {
   private expiration: string;
 
   private description: string;
-  private images: string[];
+  private image: string;
   private userId: string;
 
 
@@ -17,7 +17,7 @@ export class Post {
                        timestamp: string,
                        expiration: string,
                        description: string,
-                       images: string[],
+                       image: string,
                        userId:string) {
     this.key = key;
     this.title = title;
@@ -25,12 +25,13 @@ export class Post {
     this.timestamp = timestamp;
     this.expiration = expiration;
     this.description = description;
-    if (images.length > 0) {
-        this.images = images.slice(0);
-    } else {
-        this.images = new Array<string>();
-    };
-    this.userId=userId
+    // if (images.length > 0) {
+    //     this.images = images.slice(0);
+    // } else {
+    //     this.images = new Array<string>();
+    // };
+    this.image = image;
+    this.userId=userId;
   }
 
   public initFromJSON(json: Object) {
@@ -77,16 +78,17 @@ export class Post {
     this.description = description;
   }
 
-  public getPostImages(): string[] {
-    return this.images;
+  public getPostImage(): string {
+    return this.image;
   }
 
-  public setPostImages(images: string[]): void {
-    if (images.length > 0) {
-      this.images = images.slice(0);
-    } else {
-      this.images = new Array<string>();
-    }
+  public setPostImage(image: string): void {
+    // if (images.length > 0) {
+    //   this.images = images.slice(0);
+    // } else {
+    //   this.images = new Array<string>();
+    // }
+    this.image = image;
 
   }
   public setUserId(userId: string): void {

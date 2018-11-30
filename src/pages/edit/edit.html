@@ -48,6 +48,9 @@
       <ion-icon ios="camera" md="md-camera"></ion-icon>
          Photo
     </ion-item>
+    <ion-item>
+      <img *ngIf="post.getPostImage()" [src]="post.getPostImage()"/>
+    </ion-item>
 
   </ion-list>
 

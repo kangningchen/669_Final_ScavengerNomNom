@@ -42,6 +42,6 @@ export class EditPage {
   delete(){
     console.log(this.post);
     this.postDataService.removePost(this.post);
-    this.navCtrl.push(HomePage);
+    this.navCtrl.pop();
 }
 }

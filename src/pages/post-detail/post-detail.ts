@@ -3,8 +3,11 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { PostDataProvider } from "../../providers/post-data/post-data";
 import { UserDataProvider } from "../../providers/user-data/user-data";
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
-// import { Camera, CameraOptions } from '@ionic-native/camera';
+
+const PLACEHOLDER_IMAGE: string = "../../assets/imgs/placeholder.png";
+
 /**
  * Generated class for the PostDetailPage page.
  *
@@ -23,11 +26,15 @@ export class PostDetailPage {
   private description: string = "";
   private location: any = "";
   private expiration: string = "";
-  private images: string[] = [""];
+  private image: string;
   private userId: string="";
   private user: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private postDataService: PostDataProvider,private userDataService:UserDataProvider) {
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams, 
+              private postDataService: PostDataProvider,
+              private userDataService:UserDataProvider,
+              private camera: Camera) {
     this.userDataService.getObservable().subscribe( user => {
       this.user = user;
     });
@@ -39,11 +46,33 @@ export class PostDetailPage {
     console.log('ionViewDidLoad PostDetailPage');
   }
 
-  publish() {
+  private publish() {
     console.log(this.userId);
     let timestamp = new Date().toISOString();
-    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.images,this.userId);
+    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image,this.userId);
     this.navCtrl.pop();
+  }
+
+  private takePic(){
+    console.log('triggered');
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    this.camera.getPicture(options).then((imageData) => {
+      if (imageData) {
+        this.image = 'data:image/jpeg;base64,' + imageData;
+      }
+     }, (err) => {
+       this.image = PLACEHOLDER_IMAGE;
+       console.log(err);
+     });
+  }
+
+  private clearImage(): void {
+    this.image = "";
   }
 
 }

@@ -58,7 +58,7 @@ export class PostDataProvider {
     this.postObserver.next(postList);
   }
 
-  public addPost(title: string, location: string, timestamp: string, expiration: string, description: string, images: string[], userId:string
+  public addPost(title: string, location: string, timestamp: string, expiration: string, description: string, image: string, userId:string
   ): void {
 
     let postRef = this.db.ref('/posts');
@@ -70,7 +70,7 @@ export class PostDataProvider {
                                         timestamp,
                                         expiration,
                                         description,
-                                        images,
+                                        image,
                                         userId);
     postDataRef.set(post);
     this.notifySubscribers();
@@ -85,7 +85,7 @@ export class PostDataProvider {
     this.notifySubscribers();
   }
 
-  public updatePost(key:string,post: Post): void {
+  public updatePost(key:string, post: Post): void {
     let parentRef = this.db.ref('/posts');
     let childRef = parentRef.child(key);
     childRef.set({key:key,
@@ -94,7 +94,7 @@ export class PostDataProvider {
                  timestamp:post.getPostTimestamp(),
                  expiration:post.getExpiration(),
                  description:post.getPostDescription(),
-                 images:post.getPostImages(),
+                 image:post.getPostImage(),
                  userId:post.getUserId()
        });
   }

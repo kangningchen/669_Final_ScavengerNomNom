@@ -37,7 +37,7 @@
     <ion-card-content>
         <p>{{ post.getPostDescription() }}</p>
     </ion-card-content>
-    <img src="../../assets/imgs/placeholder.png">
+    <img *ngIf="post.getPostImage()" [src]="post.getPostImage()">
     <ion-row>
       <ion-col>
         <button ion-button icon-start clear small>
