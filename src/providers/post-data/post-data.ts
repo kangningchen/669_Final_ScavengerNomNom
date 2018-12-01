@@ -81,7 +81,8 @@ export class PostDataProvider {
                  expiration: string, 
                  description: string, 
                  image: string, 
-                 userId:string,
+                 userId: string,
+                 userName: string,
                  comments: Object): void {
 
     let postRef = this.db.ref('/posts');
@@ -94,7 +95,8 @@ export class PostDataProvider {
                                         expiration,
                                         description,
                                         image,
-                                        userId);
+                                        userId,
+                                        userName);
     postDataRef.set(post);
     this.notifySubscribers();
   }
@@ -120,6 +122,7 @@ export class PostDataProvider {
                  description: post.getPostDescription(),
                  image: post.getPostImage(),
                  userId: post.getUserId(),
+                 userName: post.getUserName(),
                  comments: post.getComments()
        });
     this.notifySubscribers();

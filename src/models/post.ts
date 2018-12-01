@@ -13,6 +13,7 @@ export class Post {
   private description: string;
   private image: string;
   private userId: string;
+  private userName: string;
   private comments: Object = {};
 
 
@@ -23,7 +24,8 @@ export class Post {
                        expiration: string,
                        description: string,
                        image: string,
-                       userId:string) {
+                       userId:string,
+                       userName: string) {
     this.key = key;
     this.title = title;
     this.location = location;
@@ -37,6 +39,7 @@ export class Post {
     // };
     this.image = image;
     this.userId = userId;
+    this.userName = userName;
     console.log(this.comments);
   }
 
@@ -101,6 +104,13 @@ export class Post {
     return this.userId;
   }
 
+  public setUserName(userName: string): void{
+    this.userName = userName;
+  }
+
+  public getUserName(): string{
+    return this.userName;
+  }
   // comment management
 
   public initComments(commentSnapshot: Object) {

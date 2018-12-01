@@ -17,7 +17,8 @@ export class PostManager {
                           childSnapshot.val().expiration,
                           childSnapshot.val().description,
                           childSnapshot.val().image,
-                          childSnapshot.val().userId);
+                          childSnapshot.val().userId,
+                          childSnapshot.val().userName);
       console.log('CommentSnap', childSnapshot.val().comments)
       post.initComments(childSnapshot.val().comments);
       this.posts[childSnapshot.key] = post;
@@ -47,8 +48,9 @@ export class PostManager {
                 expiration: string,
                 description: string = "",
                 image: string = "",
-                userId: string= ""): Post {
-    let post = new Post (key, title, location, timestamp, expiration, description, image, userId);
+                userId: string= "",
+                userName: string = ""): Post {
+    let post = new Post (key, title, location, timestamp, expiration, description, image, userId, userName);
     this.posts[key] = post;
     console.log('hey', post);
     return post;

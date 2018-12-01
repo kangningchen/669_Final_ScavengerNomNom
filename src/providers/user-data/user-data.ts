@@ -48,7 +48,7 @@ export class UserDataProvider {
 
   public getUserName():string {
     if (this.user){
-      return this.user.lastName;
+      return this.user.displayName;
     }
   }
 
