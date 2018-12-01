@@ -29,6 +29,7 @@ export class PostDetailPage {
   private image: string;
   private userId: string="";
   private user: any;
+  private comments: Object= {};
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -49,7 +50,7 @@ export class PostDetailPage {
   private publish() {
     console.log(this.userId);
     let timestamp = new Date().toISOString();
-    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image,this.userId);
+    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image, this.userId, this.comments);
     this.navCtrl.pop();
   }
 

@@ -18,6 +18,8 @@ export class PostManager {
                           childSnapshot.val().description,
                           childSnapshot.val().image,
                           childSnapshot.val().userId);
+      console.log('CommentSnap', childSnapshot.val().comments)
+      post.initComments(childSnapshot.val().comments);
       this.posts[childSnapshot.key] = post;
     });
   }
@@ -45,11 +47,10 @@ export class PostManager {
                 expiration: string,
                 description: string = "",
                 image: string = "",
-                userId: string= ""
-               ): Post {
-    let post = new Post (key, title, location, timestamp, expiration, description, image,userId);
+                userId: string= ""): Post {
+    let post = new Post (key, title, location, timestamp, expiration, description, image, userId);
     this.posts[key] = post;
-    console.log('hey', post)
+    console.log('hey', post);
     return post;
   }
 

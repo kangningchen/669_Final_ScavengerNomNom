@@ -21,6 +21,7 @@ const PLACEHOLDER_IMAGE: string = "../../assets/imgs/placeholder.png";
   templateUrl: 'edit.html',
 })
 export class EditPage {
+  private postKey: string;
   private post:any;
   private image: string;
 
@@ -29,9 +30,9 @@ export class EditPage {
               public navParams: NavParams, 
               public postDataService:PostDataProvider,
               public camera: Camera) {
-      let key = this.navParams.get("key");
+      this.postKey = this.navParams.get("key");
       // console.log(key);
-      this.post = this.postDataService.getPost(key);
+      this.post = this.postDataService.getPost(this.postKey);
       this.image = this.post.getPostImage();
 
   }
@@ -43,7 +44,7 @@ export class EditPage {
 
   update() {
     this.post.setPostImage(this.image);
-    this.postDataService.updatePost(this.post.key, this.post);
+    this.postDataService.updatePost(this.postKey);
     this.navCtrl.pop();
   }
 

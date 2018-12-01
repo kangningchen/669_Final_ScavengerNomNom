@@ -1,3 +1,7 @@
+import { Comment } from './comment';
+
+
+
 export class Post {
   private key: string;
   private title: string;
@@ -9,6 +13,7 @@ export class Post {
   private description: string;
   private image: string;
   private userId: string;
+  private comments: Object = {};
 
 
   public constructor ( key: string,
@@ -31,11 +36,8 @@ export class Post {
     //     this.images = new Array<string>();
     // };
     this.image = image;
-    this.userId=userId;
-  }
-
-  public initFromJSON(json: Object) {
-
+    this.userId = userId;
+    console.log(this.comments);
   }
 
   public getPostKey(): string {
@@ -97,6 +99,69 @@ export class Post {
 
   public getUserId(): string {
     return this.userId;
+  }
+
+  // comment management
+
+  public initComments(commentSnapshot: Object) {
+    for (let k in commentSnapshot) {
+      let commentObject = commentSnapshot[k]
+      let comment = new Comment(k, 
+                                commentObject.commentatorId, 
+                                commentObject.commentatorUserName,
+                                commentObject.commentatorAvatar, 
+                                commentObject.commentTimestamp, 
+                                commentObject.commentText)
+      this.comments[k] = comment;
+      console.log('Init comments:', this.comments);
+    }
+  }
+
+  public getComments(): Object {
+    return this.comments;
+  }
+
+  public setComments(comments: Object): void {
+    this.comments = comments;
+  }
+
+  public getCommentList(): Comment[] {
+    let commentList: Comment[] = [];
+    for (let k in this.comments) {
+      commentList.push(this.comments[k]);
+    }
+    return commentList;
+  }
+
+  public getCommentByKey(key: string): Post {
+    return this.comments[key];
+  }
+
+  public addComment(commentkey: string,
+                    commentatorId: string,
+                    commentatorUserName: string,
+                    commentatorAvatar: string,
+                    commentTimestamp: string,
+                    commentText:string): Comment {
+    let comment = new Comment(commentkey, commentatorId, commentatorUserName, 
+                              commentatorAvatar, commentTimestamp, commentText);
+    if (this.comments === undefined) {
+      this.comments = {};
+      this.comments[commentkey] = comment;
+    }
+    else {
+      this.comments[commentkey] = comment;
+    }
+    console.log('Hey added comment:', this.comments)
+    return comment;
+  }
+
+  public removeComment(comment: Comment): void {
+    delete this.comments[comment.getCommentKey()];
+  }
+
+  public removeCommentByKey(key: string): void {
+    delete this.comments[key];
   }
 
 
