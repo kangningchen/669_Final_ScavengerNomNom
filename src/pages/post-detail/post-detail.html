@@ -33,9 +33,13 @@
       </ion-label>
       <ion-datetime displayFormat="hh:mm a MMM YYYY" pickerFormat="YYYY-MMM-DDTHH:mm" [(ngModel)]="expiration"></ion-datetime>
     </ion-item>
-    <ion-item>
+    <ion-item (click)="takePic()" no-lines>
       <ion-icon ios="camera" md="md-camera"></ion-icon>
          Photo
+    </ion-item> 
+    <ion-item *ngIf="image">
+      <ion-icon name="close" (click)="clearImage()"></ion-icon><br>
+      <img [src]="image"/>
     </ion-item>
-  </ion-list>
+  </ion-list> 
 </ion-content>

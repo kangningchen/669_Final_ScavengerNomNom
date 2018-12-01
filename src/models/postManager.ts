@@ -16,7 +16,7 @@ export class PostManager {
                           childSnapshot.val().timestamp,
                           childSnapshot.val().expiration,
                           childSnapshot.val().description,
-                          childSnapshot.val().images,
+                          childSnapshot.val().image,
                           childSnapshot.val().userId);
       this.posts[childSnapshot.key] = post;
     });
@@ -44,11 +44,12 @@ export class PostManager {
                 timestamp: string = "",
                 expiration: string,
                 description: string = "",
-                images: string[]= new Array<string>(),
-                userId: string=""
+                image: string = "",
+                userId: string= ""
                ): Post {
-    let post = new Post (key, title, location, timestamp, expiration, description, images,userId);
+    let post = new Post (key, title, location, timestamp, expiration, description, image,userId);
     this.posts[key] = post;
+    console.log('hey', post)
     return post;
   }
 
