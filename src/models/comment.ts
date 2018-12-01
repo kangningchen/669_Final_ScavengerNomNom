@@ -1,23 +1,23 @@
 export class Comment {
   private key: string;
-  private userId: string;
-  private username: string;
-  private avatar: string;
-  private timestamp: string;
-  private text: string
+  private commentatorId: string;
+  private commentatorUserName: string;
+  private commentatorAvatar: string;
+  private commentTimestamp: string;
+  private commentText: string
  
   public constructor ( key: string,
-                       userId: string,
-                       username: string,
-                       avatar: string,
-                       timestamp: string,
-                       text:string) {
+                       commentatorId: string,
+                       commentatorUserName: string,
+                       commentatorAvatar: string,
+                       commentTimestamp: string,
+                       commentText:string) {
     this.key = key;
-    this.userId = userId;
-    this.username = username;
-    this.avatar = avatar;
-    this.timestamp = timestamp;
-    this.text = text;
+    this.commentatorId = commentatorId;
+    this.commentatorUserName = commentatorUserName;
+    this.commentatorAvatar = commentatorAvatar;
+    this.commentTimestamp = commentTimestamp;
+    this.commentText = commentText;
   }
 
 
@@ -25,24 +25,24 @@ export class Comment {
     return this.key;
   }
 
-  public getCommentUserId(): string {
-    return this.userId;
+  public getCommentatorId(): string {
+    return this.commentatorId;
   }
 
-  public getCommentUsername(): string {
-    return this.username;
+  public getCommentatorUserName(): string {
+    return this.commentatorUserName;
   }
 
-  public getCommentAvatar(): string {
-    return this.avatar;
+  public getCommentatorAvatar(): string {
+    return this.commentatorAvatar;
   }
 
   public getCommentTimestamp(): string {
-    return this.timestamp;
+    return this.commentTimestamp;
   }
 
   public getCommentText(): string {
-    return this.text;
+    return this.commentText;
   }
   
 }

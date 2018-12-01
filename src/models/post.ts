@@ -1,5 +1,7 @@
 import { Comment } from './comment';
 
+
+
 export class Post {
   private key: string;
   private title: string;
@@ -34,11 +36,8 @@ export class Post {
     //     this.images = new Array<string>();
     // };
     this.image = image;
-    this.userId=userId;
-  }
-
-  public initFromJSON(json: Object) {
-
+    this.userId = userId;
+    console.log(this.comments);
   }
 
   public getPostKey(): string {
@@ -104,8 +103,26 @@ export class Post {
 
   // comment management
 
+  public initComments(commentSnapshot: Object) {
+    for (let k in commentSnapshot) {
+      let commentObject = commentSnapshot[k]
+      let comment = new Comment(k, 
+                                commentObject.commentatorId, 
+                                commentObject.commentatorUserName,
+                                commentObject.commentatorAvatar, 
+                                commentObject.commentTimestamp, 
+                                commentObject.commentText)
+      this.comments[k] = comment;
+      console.log('Init comments:', this.comments);
+    }
+  }
+
   public getComments(): Object {
     return this.comments;
+  }
+
+  public setComments(comments: Object): void {
+    this.comments = comments;
   }
 
   public getCommentList(): Comment[] {
@@ -120,15 +137,22 @@ export class Post {
     return this.comments[key];
   }
 
-  public addComment(key: string,
-                    userId: string,
-                    username: string,
-                    avatar: string,
-                    timestamp: string,
-                    text:string): Comment {
-    let comment = new Comment (key, userId, username, avatar, timestamp, text);
-    this.comments[key] = comment;
-    console.log('Added comment:', comment)
+  public addComment(commentkey: string,
+                    commentatorId: string,
+                    commentatorUserName: string,
+                    commentatorAvatar: string,
+                    commentTimestamp: string,
+                    commentText:string): Comment {
+    let comment = new Comment(commentkey, commentatorId, commentatorUserName, 
+                              commentatorAvatar, commentTimestamp, commentText);
+    if (this.comments === undefined) {
+      this.comments = {};
+      this.comments[commentkey] = comment;
+    }
+    else {
+      this.comments[commentkey] = comment;
+    }
+    console.log('Hey added comment:', this.comments)
     return comment;
   }
 

@@ -63,18 +63,18 @@
     <ion-card-header>
       Comments
     </ion-card-header>
-    <ion-list *ngFor="let comment of comments">
-      <ion-item>
+    <ion-list>
+      <ion-item *ngFor="let comment of commentList" lines>
         <ion-avatar item-start>
-          <img src="../../assets/imgs/avatar.jpg">
+          <img [src]="comment.getCommentatorAvatar()">
         </ion-avatar>
-        <h2>{{ comment.getUsername() }}</h2>
+        <h2>{{ comment.getCommentatorUserName() }}</h2>
         <p>{{ comment.getCommentText() }}</p>
-        <ion-note>{{ comment.getCommentTimestamp()}}</ion-note>             
+        <ion-note>{{ comment.getCommentTimestamp() }}</ion-note>             
       </ion-item>
     </ion-list>
     <ion-item>
-      <ion-textarea placeholder="Leave a comment..." [(ngModel)]="description"></ion-textarea>
+      <ion-textarea placeholder="Leave a comment..." [(ngModel)]="commentText"></ion-textarea>
     </ion-item>
     <button ion-button clear small float-right (click)="addComment()">
       POST

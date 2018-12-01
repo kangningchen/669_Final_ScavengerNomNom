@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Post } from "../../models/post";
 import { PostManager } from '../../models/postManager';
+import { Comment } from '../../models/comment';
 import { Observable } from 'rxjs';
 import { Observer } from 'rxjs';
 import firebase from 'firebase';
@@ -17,6 +18,8 @@ export class PostDataProvider {
   private postManager: PostManager;
   private postObservable: Observable<Post[]>;
   private postObserver: Observer<Object>;
+  private commentObservable: Observable<Comment[]>;
+  private commentObserver: Observer<Object>;
   private db: any;
 
 
@@ -27,6 +30,10 @@ export class PostDataProvider {
 
     this.postObservable = Observable.create(observer => {
       this.postObserver = observer;
+    });
+
+    this.commentObservable = Observable.create(observer => {
+      this.commentObserver = observer;
     });
 
     this.db = firebase.database();
@@ -53,13 +60,29 @@ export class PostDataProvider {
     return this.postObservable;
   }
 
+  public getCommentObservable(): Observable<Comment[]> {
+    return this.commentObservable;
+  }
+
   private notifySubscribers(): void {
     let postList = this.postManager.getPostList();
     this.postObserver.next(postList);
   }
 
-  public addPost(title: string, location: string, timestamp: string, expiration: string, description: string, image: string, userId:string
-  ): void {
+  private notifyCommentSubscribers(postKey): void {
+    let post = this.postManager.getPostByKey(postKey);
+    let commentList = post.getCommentList();
+    this.commentObserver.next(commentList);
+  }
+
+  public addPost(title: string, 
+                 location: string, 
+                 timestamp: string, 
+                 expiration: string, 
+                 description: string, 
+                 image: string, 
+                 userId:string,
+                 comments: Object): void {
 
     let postRef = this.db.ref('/posts');
     let postDataRef = postRef.push();
@@ -85,18 +108,45 @@ export class PostDataProvider {
     this.notifySubscribers();
   }
 
-  public updatePost(key:string, post: Post): void {
+  public updatePost(postKey:string): void {
+    let post = this.postManager.getPostByKey(postKey);
     let parentRef = this.db.ref('/posts');
-    let childRef = parentRef.child(key);
-    childRef.set({key:key,
-                 title:post.getPostTitle(),
-                 location:post.getLocation(),
-                 timestamp:post.getPostTimestamp(),
-                 expiration:post.getExpiration(),
-                 description:post.getPostDescription(),
-                 image:post.getPostImage(),
-                 userId:post.getUserId()
+    let childRef = parentRef.child(postKey);
+    childRef.set({key: postKey,
+                 title: post.getPostTitle(),
+                 location: post.getLocation(),
+                 timestamp: post.getPostTimestamp(),
+                 expiration: post.getExpiration(),
+                 description: post.getPostDescription(),
+                 image: post.getPostImage(),
+                 userId: post.getUserId(),
+                 comments: post.getComments()
        });
+    this.notifySubscribers();
+  }
+
+  public getCommentList(postKey: string) {
+    let post = this.postManager.getPostByKey(postKey);
+    let commentList = post.getCommentList();
+    return commentList;
+  }
+
+  public addComment(postKey: string,
+                    commentatorId: string,
+                    commentatorUserName: string,
+                    commentatorAvatar: string,
+                    commentTimestamp: string,
+                    commentText: string): void {
+    let post = this.postManager.getPostByKey(postKey);
+    let commentRef = this.db.ref('/posts/' + postKey + '/comments');
+    let commentDataRef = commentRef.push();
+    let commentKey = commentDataRef.getKey();
+    post.addComment(commentKey, commentatorId, commentatorUserName, 
+                    commentatorAvatar, commentTimestamp, commentText);
+    console.log('added comment!!:', post.getComments())
+    this.updatePost(postKey);
+    this.notifyCommentSubscribers(postKey);
+    this.notifySubscribers();
   }
 
 }
