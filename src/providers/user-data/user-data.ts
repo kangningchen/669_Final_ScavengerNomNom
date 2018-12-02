@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Observer } from 'rxjs';
 import firebase from 'firebase';
-
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 /*
   Generated class for the UserDataProvider provider.
 
@@ -11,9 +11,12 @@ import firebase from 'firebase';
 */
 @Injectable()
 export class UserDataProvider {
+  // @ViewChild('myNav') nav: NavController;
   private serviceObserver: Observer<string>;
   private clientObservable: Observable<string>;
   private user: any;
+
+
   constructor() {
     this.user = firebase.auth().currentUser;
     this.clientObservable = Observable.create(observerThatWasCreated => {
@@ -44,7 +47,13 @@ export class UserDataProvider {
     firebase.auth().signInWithEmailAndPassword(email, password).catch(
       error =>this.notifySubscribers(error.message)
     );
+
   }
+  public  logOut() : void{
+      firebase.auth().signOut().catch(
+        error =>this.notifySubscribers(error.message)
+       );
+    }
 
   public getUserName():string {
     if (this.user){
@@ -81,5 +90,6 @@ export class UserDataProvider {
       this.user = null;
     }
   }
+
 
 }

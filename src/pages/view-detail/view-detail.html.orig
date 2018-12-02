@@ -10,12 +10,14 @@
     <ion-title>view-detail</ion-title>
   </ion-navbar>
 
+
+
 </ion-header>
 
 
 <ion-content>
     <ion-card>
-      <div *ngIf="post.getUserId()==this.userId">
+      <div *ngIf="post.userId==this.userId">
         <button ion-button icon-start clear small (click)=editPost(post.key)>
           <ion-icon name="switch"></ion-icon>Edit
         </button>
@@ -26,8 +28,13 @@
       <img src="../../assets/imgs/avatar.jpg">
     </ion-avatar>
     <h2>{{ post.getPostTitle() }}</h2>
+<<<<<<< HEAD
+    <ion-note class="note">Jack Doe</ion-note>
+    <ion-note class="note">{{ post.getPostTimestamp()}}</ion-note>
+=======
     <ion-note class="note">{{ post.getUserName() }}</ion-note>
     <ion-note class="note">{{ post.getPostTimestamp()}}</ion-note> 
+>>>>>>> f50446e0587c0f9ad19915815498860740d67272
   </ion-item>
 
   <ion-card-content>

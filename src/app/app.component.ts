@@ -3,6 +3,7 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { TabsPage } from '../pages/tabs/tabs';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login'
 import firebase from 'firebase';
@@ -13,6 +14,7 @@ declare var config;
 })
 export class MyApp {
   rootPage:any = LoginPage;
+  tabs:any =TabsPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     firebase.initializeApp(config);
@@ -24,4 +26,3 @@ export class MyApp {
     });
   }
 }
-

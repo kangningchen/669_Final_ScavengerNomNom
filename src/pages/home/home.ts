@@ -7,6 +7,7 @@ import { EditPage } from '../edit/edit';
 import { ViewDetailPage } from '../view-detail/view-detail';
 import { PostDataProvider } from "../../providers/post-data/post-data";
 import { UserDataProvider } from "../../providers/user-data/user-data";
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-home',
@@ -16,6 +17,7 @@ import { UserDataProvider } from "../../providers/user-data/user-data";
 export class HomePage {
 
   private postList: Post[];
+  private userPostList: Post[];
   private user: any;
   private userId:string;
   private filteredList: Post[];
@@ -29,6 +31,9 @@ export class HomePage {
         return new Date(Date.parse(b.getPostTimestamp())).getTime() - new Date(Date.parse(a.getPostTimestamp())).getTime();})
       this.filteredList = this.postList;
     });
+    this.postDataService.getUserPostListObservable().subscribe( userPostList => {
+      this.userPostList = userPostList });
+
     this.postList = this.postDataService.getPostList();
 
     this.userId = this.userDataService.getUserId();
@@ -39,7 +44,7 @@ export class HomePage {
   ngOnInit() {
     this.postList = this.postDataService.getPostList();
     this.userId = this.userDataService.getUserId();
-    
+
   }
 
   addPost() {
@@ -47,9 +52,9 @@ export class HomePage {
   }
 
   editPost(key:string){
-    this.navCtrl.push(EditPage,{"key":key});
+    this.navCtrl.push(EditPage,{"postKey":key});
   }
-  
+
   viewPost(postKey: string) {
     this.navCtrl.push(ViewDetailPage, {"postKey": postKey});
   }
