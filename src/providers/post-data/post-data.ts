@@ -36,6 +36,10 @@ export class PostDataProvider {
       this.commentObserver = observer;
     });
 
+    this.userPostListObservable = Observable.create(observer => {
+      this.userPostListObserver = observer;
+    });
+
     this.db = firebase.database();
     let postRef = this.db.ref('/posts');
 
@@ -63,10 +67,18 @@ export class PostDataProvider {
   public getCommentObservable(): Observable<Comment[]> {
     return this.commentObservable;
   }
+  public getUserPostListObservable(): Observable<Post[]> {
+    return this.userPostListObservable;
+  }
 
   private notifySubscribers(): void {
     let postList = this.postManager.getPostList();
     this.postObserver.next(postList);
+  }
+
+  private notifyUserPostListSubscribers(userId): void {
+    let userPostList = this.postManager.getPostByUserId(userId);
+    this.userPostListObserver.next(userPostList);
   }
 
   private notifyCommentSubscribers(postKey): void {
@@ -75,12 +87,12 @@ export class PostDataProvider {
     this.commentObserver.next(commentList);
   }
 
-  public addPost(title: string, 
-                 location: string, 
-                 timestamp: string, 
-                 expiration: string, 
-                 description: string, 
-                 image: string, 
+  public addPost(title: string,
+                 location: string,
+                 timestamp: string,
+                 expiration: string,
+                 description: string,
+                 image: string,
                  userId:string,
                  comments: Object): void {
 
@@ -97,15 +109,20 @@ export class PostDataProvider {
                                         userId);
     postDataRef.set(post);
     this.notifySubscribers();
+    this.notifyUserPostListSubscribers(post.userId);
   }
 
   public getPost(key:string){
     return this.postManager.getPostByKey(key);
   }
+  public getPostListByUserId(userId: string){
+    return this.postManager.getPostByUserId(userId);
+  }
 
   public removePost(post:any){
     this.postManager.removePost(post);
     this.notifySubscribers();
+    // this.notifyUserPostListSubscribers(post.userId);
   }
 
   public updatePost(postKey:string): void {
@@ -123,6 +140,8 @@ export class PostDataProvider {
                  comments: post.getComments()
        });
     this.notifySubscribers();
+    // this.notifyUserPostListSubscribers(post.userId);
+
   }
 
   public getCommentList(postKey: string) {
@@ -141,7 +160,7 @@ export class PostDataProvider {
     let commentRef = this.db.ref('/posts/' + postKey + '/comments');
     let commentDataRef = commentRef.push();
     let commentKey = commentDataRef.getKey();
-    post.addComment(commentKey, commentatorId, commentatorUserName, 
+    post.addComment(commentKey, commentatorId, commentatorUserName,
                     commentatorAvatar, commentTimestamp, commentText);
     console.log('added comment!!:', post.getComments())
     this.updatePost(postKey);

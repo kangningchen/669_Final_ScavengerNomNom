@@ -26,8 +26,8 @@ export class EditPage {
   private image: string;
 
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams, 
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
               public postDataService:PostDataProvider,
               public camera: Camera) {
       this.postKey = this.navParams.get("key");
@@ -43,7 +43,7 @@ export class EditPage {
   }
 
   update() {
-    this.post.setPostImage(this.image);
+    // this.post.setPostImage(this.image);
     this.postDataService.updatePost(this.postKey);
     this.navCtrl.pop();
   }

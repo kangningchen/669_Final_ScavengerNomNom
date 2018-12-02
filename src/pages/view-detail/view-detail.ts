@@ -5,6 +5,7 @@ import { Post } from '../../models/post';
 import { PostManager } from '../../models/postManager';
 import { Comment } from '../../models/comment';
 import { UserDataProvider } from "../../providers/user-data/user-data";
+import { EditPage } from '../edit/edit';
 
 
 
@@ -24,6 +25,7 @@ export class ViewDetailPage {
   private postKey: string;
   private post: Post;
   private postList: Post[];
+  private userId: string;
   private timeCounterInterval: any;
   private countDownString = "";
   private commentText: string = "";
@@ -31,18 +33,21 @@ export class ViewDetailPage {
   private commentatorUserName: string;
   private commentatorAvatar: string = "../../assets/imgs/avatar.jpg";
   private commentList: Comment[] = [];
+  private camera: any;
+  private image: any;
 
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams, 
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
               private postDataService: PostDataProvider,
               private userDataService: UserDataProvider) {
     this.postKey = this.navParams.get("postKey");
     console.log("nav:", this.postKey);
     this.post = this.postDataService.getPostByKey(this.postKey);
+    this.userId = this.userDataService.getUserId();
     this.postDataService.getCommentObservable().subscribe( commentList => {
       this.commentList = commentList });
     this.commentList = this.post.getCommentList();
-  
+
     this.commentatorId = this.userDataService.getUserId();
     console.log('commentatorId:', this.commentatorId);
     this.commentatorUserName = this.userDataService.getUserName();
@@ -52,7 +57,7 @@ export class ViewDetailPage {
     console.log('commentatorUserName:', this.commentatorUserName);
 
     this.getTimeRest();
-    console.log('Is comments here?', this.post);
+    // console.log('Is comments here?', this.post);
 
   }
 
@@ -72,7 +77,7 @@ export class ViewDetailPage {
     var r = new Date(Date.parse(this.post.getExpiration())).getTime();
     this.timeCounterInterval = setInterval(() => {
       this.countDown(r);
-      
+
     }, 1000);
   }
 
@@ -97,8 +102,8 @@ export class ViewDetailPage {
     this.commentList = this.postDataService.getCommentList(this.postKey);
   }
 
-  public addComment(commentatorId: string, 
-                    commentatorUserName: string, 
+  public addComment(commentatorId: string,
+                    commentatorUserName: string,
                     commentatorAvatar: string,
                     commentText: string) {
     let timestamp = new Date().toISOString();
@@ -108,5 +113,45 @@ export class ViewDetailPage {
                                     this.commentatorAvatar,
                                     timestamp,
                                     this.commentText);
+  }
+
+  editPost(key:string){
+    this.navCtrl.push(EditPage,{"key":key});
+  }
+
+  update() {
+    // this.post.setPostImage(this.image);
+    this.postDataService.updatePost(this.postKey);
+    this.navCtrl.pop();
+  }
+
+  delete(){
+    console.log(this.post);
+    this.postDataService.removePost(this.post);
+    this.navCtrl.pop();
+  }
+
+  private takePic(){
+    console.log('triggered');
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    this.camera.getPicture(options).then((imageData) => {
+      if (imageData) {
+        // this.post.setPostImage('data:image/jpeg;base64,' + imageData);
+        this.image = 'data:image/jpeg;base64,' + imageData;
+      }
+     }, (err) => {
+      //  this.post.setPostImage(PLACEHOLDER_IMAGE);
+       this.image = PLACEHOLDER_IMAGE;
+       console.log(err);
+     });
+  }
+
+  private clearImage(): void {
+    this.image = "";
   }
 }

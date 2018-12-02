@@ -18,8 +18,8 @@ export class PostManager {
                           childSnapshot.val().description,
                           childSnapshot.val().image,
                           childSnapshot.val().userId);
-      console.log('CommentSnap', childSnapshot.val().comments)
-      post.initComments(childSnapshot.val().comments);
+      // console.log('CommentSnap', childSnapshot.val().comments)
+      // post.initComments(childSnapshot.val().comments);
       this.posts[childSnapshot.key] = post;
     });
   }
@@ -38,6 +38,18 @@ export class PostManager {
 
   public getPostByKey(key: string): Post {
     return this.posts[key];
+  }
+
+  public getPostByUserId(userId: string): Post[] {
+    let userPostList: Post[] = [];
+
+    for (let k in this.posts){
+        if (this.posts[k]["userId"]==userId){
+          userPostList.push(this.posts[k])
+        }
+      }
+
+    return userPostList;
   }
 
   public addPost(key: string,

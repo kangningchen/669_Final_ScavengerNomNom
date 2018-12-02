@@ -15,6 +15,9 @@ import { PostDataProvider } from '../providers/post-data/post-data';
 import { EditPage } from '../pages/edit/edit';
 import { ViewDetailPage } from '../pages/view-detail/view-detail';
 import { ViewDetailPageModule } from '../pages/view-detail/view-detail.module';
+import {IonTagsInputModule} from "ionic-tags-input";
+import { TabsPage } from '../pages/tabs/tabs';
+import { UserPage } from '../pages/user/user';
 
 @NgModule({
   declarations: [
@@ -24,11 +27,14 @@ import { ViewDetailPageModule } from '../pages/view-detail/view-detail.module';
     LoginPage,
     RegisterPage,
     EditPage,
-    ViewDetailPage
+    ViewDetailPage,
+    TabsPage,
+    UserPage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonTagsInputModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -38,7 +44,9 @@ import { ViewDetailPageModule } from '../pages/view-detail/view-detail.module';
     LoginPage,
     RegisterPage,
     EditPage,
-    ViewDetailPage
+    ViewDetailPage,
+    TabsPage,
+    UserPage
   ],
   providers: [
     StatusBar,

@@ -7,6 +7,7 @@ import { EditPage } from '../edit/edit';
 import { ViewDetailPage } from '../view-detail/view-detail';
 import { PostDataProvider } from "../../providers/post-data/post-data";
 import { UserDataProvider } from "../../providers/user-data/user-data";
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-home',
@@ -39,7 +40,7 @@ export class HomePage {
   ngOnInit() {
     this.postList = this.postDataService.getPostList();
     this.userId = this.userDataService.getUserId();
-    
+
   }
 
   addPost() {
@@ -49,7 +50,7 @@ export class HomePage {
   editPost(key:string){
     this.navCtrl.push(EditPage,{"key":key});
   }
-  
+
   viewPost(postKey: string) {
     this.navCtrl.push(ViewDetailPage, {"postKey": postKey});
   }

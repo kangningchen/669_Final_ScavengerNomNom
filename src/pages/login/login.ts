@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { RegisterPage } from '../register/register'
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { HomePage } from '../home/home'
+import { EditPage } from '../edit/edit';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * Generated class for the LoginPage page.
@@ -20,6 +22,10 @@ export class LoginPage {
   private email:string = "";
   private password:string = "";
   private errorMsg:string = "";
+  home:any = HomePage;
+  edit:any = EditPage;
+  tabs:any = TabsPage;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
             private userDataService: UserDataProvider) {
     this.userDataService.getObservable().subscribe(update=> {
@@ -41,13 +47,15 @@ export class LoginPage {
       return;
     }
     this.userDataService.logIn(this.email, this.password);
+    this.navCtrl.setRoot(TabsPage);
   }
+
 
   private getMessage(msg: string):void {
     if (msg != "success"){
       this.errorMsg = msg;
     } else {
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot(TabsPage);
     }
   }
 

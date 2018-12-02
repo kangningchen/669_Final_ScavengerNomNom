@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { UserDataProvider } from '../../providers/user-data/user-data';
 import { HomePage } from '../home/home'
+import { TabsPage } from '../../pages/tabs/tabs';
 
 /**
  * Generated class for the RegisterPage page.
@@ -39,6 +40,7 @@ export class RegisterPage {
       return;
     }
     this.userDataService.createAccount(this.email, this.password, this.username);
+    this.navCtrl.setRoot(TabsPage);
 
   }
 
@@ -47,7 +49,7 @@ export class RegisterPage {
       this.errorMsg = result;
     }
     else {
-      this.navCtrl.setRoot(HomePage);
+      this.navCtrl.setRoot(TabsPage);
     }
 
   }

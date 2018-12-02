@@ -11,7 +11,7 @@ export class Post {
   private expiration: string;
 
   private description: string;
-  private image: string;
+  private image: string="";
   private userId: string;
   private comments: Object = {};
 
@@ -37,7 +37,7 @@ export class Post {
     // };
     this.image = image;
     this.userId = userId;
-    console.log(this.comments);
+    // console.log(this.comments);
   }
 
   public getPostKey(): string {
@@ -67,7 +67,7 @@ export class Post {
   public getExpiration(): string {
     return this.expiration;
   }
-  
+
   public setExpiration(expiration: string): void {
     this.expiration = expiration;
   }
@@ -106,11 +106,11 @@ export class Post {
   public initComments(commentSnapshot: Object) {
     for (let k in commentSnapshot) {
       let commentObject = commentSnapshot[k]
-      let comment = new Comment(k, 
-                                commentObject.commentatorId, 
+      let comment = new Comment(k,
+                                commentObject.commentatorId,
                                 commentObject.commentatorUserName,
-                                commentObject.commentatorAvatar, 
-                                commentObject.commentTimestamp, 
+                                commentObject.commentatorAvatar,
+                                commentObject.commentTimestamp,
                                 commentObject.commentText)
       this.comments[k] = comment;
       console.log('Init comments:', this.comments);
@@ -143,7 +143,7 @@ export class Post {
                     commentatorAvatar: string,
                     commentTimestamp: string,
                     commentText:string): Comment {
-    let comment = new Comment(commentkey, commentatorId, commentatorUserName, 
+    let comment = new Comment(commentkey, commentatorId, commentatorUserName,
                               commentatorAvatar, commentTimestamp, commentText);
     if (this.comments === undefined) {
       this.comments = {};
