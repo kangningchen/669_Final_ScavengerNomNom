@@ -107,6 +107,9 @@ export class PostDataProvider {
 
   public removePost(post:any){
     this.postManager.removePost(post);
+    let parentRef = this.db.ref('/posts');
+    let childRef = parentRef.child(post.getPostKey());
+    childRef.remove();
     this.notifySubscribers();
   }
 
