@@ -24,6 +24,7 @@ export class ViewDetailPage {
   private postKey: string;
   private post: Post;
   private postList: Post[];
+  private userId: string;
   private timeCounterInterval: any;
   private countDownString = "";
   private commentText: string = "";
@@ -36,13 +37,20 @@ export class ViewDetailPage {
               public navParams: NavParams, 
               private postDataService: PostDataProvider,
               private userDataService: UserDataProvider) {
+    // get post
     this.postKey = this.navParams.get("postKey");
     console.log("nav:", this.postKey);
     this.post = this.postDataService.getPostByKey(this.postKey);
+
+    // get post owner id
+    this.userId = this.post.getUserId();
+
+    // get comment list
     this.postDataService.getCommentObservable().subscribe( commentList => {
       this.commentList = commentList });
     this.commentList = this.post.getCommentList();
-  
+
+    // retrieve current user's id and username to be commentatorId and commentatorUserName
     this.commentatorId = this.userDataService.getUserId();
     console.log('commentatorId:', this.commentatorId);
     this.commentatorUserName = this.userDataService.getUserName();
@@ -108,5 +116,9 @@ export class ViewDetailPage {
                                     this.commentatorAvatar,
                                     timestamp,
                                     this.commentText);
+  }
+
+  public deleteComment(comment: Comment) {
+    this.postDataService.deleteComment(this.postKey, comment);
   }
 }

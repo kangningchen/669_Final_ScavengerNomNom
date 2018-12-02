@@ -149,6 +149,16 @@ export class PostDataProvider {
     console.log('added comment!!:', post.getComments())
     this.updatePost(postKey);
     this.notifyCommentSubscribers(postKey);
+    // this.notifySubscribers();
+  }
+
+  public deleteComment(postKey: string, comment: Comment): void {
+    let post = this.postManager.getPostByKey(postKey);
+    post.removeComment(comment);
+    let commentRef = this.db.ref('/posts/' + postKey + '/comments');
+    let commentChildRef = commentRef.child(comment.getCommentKey());
+    commentChildRef.remove();
+    this.notifyCommentSubscribers(postKey);
     this.notifySubscribers();
   }
 
