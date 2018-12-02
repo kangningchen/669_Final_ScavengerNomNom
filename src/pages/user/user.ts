@@ -8,6 +8,7 @@ import { Post } from '../../models/post';
 import { PostDataProvider } from "../../providers/post-data/post-data";
 import { UserDataProvider } from "../../providers/user-data/user-data";
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { LoginPage } from '../login/login';
 // import { UserDataProvider } from "../../providers/user-data/user-data";
 // import { PostManager } from "../../models/postManager";
 //
@@ -101,5 +102,10 @@ export class UserPage {
   private clearImage(): void {
     this.image = "";
   }
+
+  public logOut() : void {
+       this.userDataService.logOut();
+       this.navCtrl.setRoot(LoginPage);
+    }
 
 }

@@ -28,9 +28,6 @@ export class TabsPage {
   // ionViewDidLoad() {
   //   console.log('ionViewDidLoad TabsPage');
   // }
-  public logOut() : void {
-       this.userDataService.logOut();
-       this.navCtrl.setRoot(LoginPage);
-    }
+  
 
  }
