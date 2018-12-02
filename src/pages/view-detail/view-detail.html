@@ -65,7 +65,7 @@
     </ion-card-header>
     <ion-list>
       <ion-item *ngFor="let comment of commentList" lines>
-        <ion-icon name="close-circle" float-right></ion-icon>
+        <ion-icon name="close-circle" *ngIf="post.userId==this.userId || comment.getCommentatorId()==this.userId" float-right></ion-icon>
         <ion-avatar item-start>
           <img [src]="comment.getCommentatorAvatar()">
         </ion-avatar>
