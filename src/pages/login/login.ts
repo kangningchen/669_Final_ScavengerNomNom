@@ -47,7 +47,6 @@ export class LoginPage {
       return;
     }
     this.userDataService.logIn(this.email, this.password);
-    this.navCtrl.setRoot(TabsPage);
   }
 
 

@@ -15,7 +15,6 @@ import { PostDataProvider } from '../providers/post-data/post-data';
 import { EditPage } from '../pages/edit/edit';
 import { ViewDetailPage } from '../pages/view-detail/view-detail';
 import { ViewDetailPageModule } from '../pages/view-detail/view-detail.module';
-import {IonTagsInputModule} from "ionic-tags-input";
 import { TabsPage } from '../pages/tabs/tabs';
 import { UserPage } from '../pages/user/user';
 
@@ -34,7 +33,6 @@ import { UserPage } from '../pages/user/user';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    IonTagsInputModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [

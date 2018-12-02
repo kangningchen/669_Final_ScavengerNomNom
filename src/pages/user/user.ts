@@ -31,7 +31,7 @@ export class UserPage {
   // private profilePic: string="../../assets/imgs/avatar.jpg";
   private userPostList: Post[];
   private userId:string;
-
+  private userName: string;
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public postDataService:PostDataProvider,
@@ -42,6 +42,7 @@ export class UserPage {
       // this.post = this.postDataService.getPost(this.postKey);
       // this.image = this.post.getPostImage();
       this.userId = this.userDataService.getUserId();
+      this.userName = this.userDataService.getUserName();
       this.postDataService.getUserPostListObservable().subscribe( userPostList => {
         this.userPostList = userPostList });
 

@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Hi,User</ion-title>
+    <ion-title>Hi, {{ userName }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -23,7 +23,7 @@
       </ion-avatar>
       </ion-col>
       <ion-col>
-      <ion-label color="primary" floating>Display Name</ion-label>
+      <ion-label color="primary" floating>{{ userName }}</ion-label>
       <!-- <ion-input (click)="changeDisplayName()"></ion-input> -->
       </ion-col>
     </ion-row>
@@ -34,7 +34,7 @@
 
     <ion-item>
       <h2>{{ post.getPostTitle() }}</h2>
-      <ion-note>Jack Doe</ion-note>
+      <ion-note>{{ userName }}</ion-note>
       <ion-note>{{ post.getPostTimestamp()}}</ion-note>
     </ion-item>
 
