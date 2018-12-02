@@ -20,6 +20,8 @@ export class PostDataProvider {
   private postObserver: Observer<Object>;
   private commentObservable: Observable<Comment[]>;
   private commentObserver: Observer<Object>;
+  private userPostListObservable:Observable<Post[]>;
+  private userPostListObserver:Observer<Object>;
   private db: any;
 
 
@@ -76,8 +78,9 @@ export class PostDataProvider {
     this.postObserver.next(postList);
   }
 
-  private notifyUserPostListSubscribers(userId): void {
+  private notifyUserPostListSubscribers(userId:string): void {
     let userPostList = this.postManager.getPostByUserId(userId);
+
     this.userPostListObserver.next(userPostList);
   }
 
@@ -109,7 +112,7 @@ export class PostDataProvider {
                                         userId);
     postDataRef.set(post);
     this.notifySubscribers();
-    this.notifyUserPostListSubscribers(post.userId);
+    this.notifyUserPostListSubscribers(userId);
   }
 
   public getPost(key:string){
@@ -120,13 +123,15 @@ export class PostDataProvider {
   }
 
   public removePost(post:any){
+    let id=post["userId"];
     this.postManager.removePost(post);
     this.notifySubscribers();
-    // this.notifyUserPostListSubscribers(post.userId);
+    this.notifyUserPostListSubscribers(id);
   }
 
   public updatePost(postKey:string): void {
     let post = this.postManager.getPostByKey(postKey);
+    let id = post["userId"];
     let parentRef = this.db.ref('/posts');
     let childRef = parentRef.child(postKey);
     childRef.set({key: postKey,
@@ -140,7 +145,7 @@ export class PostDataProvider {
                  comments: post.getComments()
        });
     this.notifySubscribers();
-    // this.notifyUserPostListSubscribers(post.userId);
+    this.notifyUserPostListSubscribers(id);
 
   }
 

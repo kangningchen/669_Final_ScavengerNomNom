@@ -6,6 +6,7 @@ import { PostManager } from '../../models/postManager';
 import { Comment } from '../../models/comment';
 import { UserDataProvider } from "../../providers/user-data/user-data";
 import { EditPage } from '../edit/edit';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
 
@@ -15,6 +16,7 @@ import { EditPage } from '../edit/edit';
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
  */
+ const PLACEHOLDER_IMAGE: string = "../../assets/imgs/placeholder.png";
 
 @IonicPage()
 @Component({
@@ -116,7 +118,7 @@ export class ViewDetailPage {
   }
 
   editPost(key:string){
-    this.navCtrl.push(EditPage,{"key":key});
+    this.navCtrl.push(EditPage,{"postKey":key});
   }
 
   update() {

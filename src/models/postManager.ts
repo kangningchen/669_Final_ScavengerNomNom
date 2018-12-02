@@ -42,10 +42,10 @@ export class PostManager {
 
   public getPostByUserId(userId: string): Post[] {
     let userPostList: Post[] = [];
-
+    console.log(userId);
     for (let k in this.posts){
         if (this.posts[k]["userId"]==userId){
-          userPostList.push(this.posts[k])
+          userPostList.push(this.posts[k]);
         }
       }
 

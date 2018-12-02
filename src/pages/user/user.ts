@@ -63,7 +63,7 @@ export class UserPage {
   }
 
   editPost(key:string){
-    this.navCtrl.push(EditPage,{"key":key});
+    this.navCtrl.push(EditPage,{"postKey":key});
   }
   // update() {
   //   this.post.setPostImage(this.image);

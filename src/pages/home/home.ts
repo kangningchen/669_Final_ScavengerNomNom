@@ -17,6 +17,7 @@ import { TabsPage } from '../tabs/tabs';
 export class HomePage {
 
   private postList: Post[];
+  private userPostList: Post[];
   private user: any;
   private userId:string;
   private filteredList: Post[];
@@ -30,6 +31,9 @@ export class HomePage {
         return new Date(Date.parse(b.getPostTimestamp())).getTime() - new Date(Date.parse(a.getPostTimestamp())).getTime();})
       this.filteredList = this.postList;
     });
+    this.postDataService.getUserPostListObservable().subscribe( userPostList => {
+      this.userPostList = userPostList });
+
     this.postList = this.postDataService.getPostList();
 
     this.userId = this.userDataService.getUserId();
@@ -48,7 +52,7 @@ export class HomePage {
   }
 
   editPost(key:string){
-    this.navCtrl.push(EditPage,{"key":key});
+    this.navCtrl.push(EditPage,{"postKey":key});
   }
 
   viewPost(postKey: string) {

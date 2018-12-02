@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HomePage } from '../home/home';
 import { PostDataProvider } from "../../providers/post-data/post-data";
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { UserPage } from '../user/user';
+
 // import { UserDataProvider } from "../../providers/user-data/user-data";
 // import { PostManager } from "../../models/postManager";
 //
@@ -30,7 +32,7 @@ export class EditPage {
               public navParams: NavParams,
               public postDataService:PostDataProvider,
               public camera: Camera) {
-      this.postKey = this.navParams.get("key");
+      this.postKey = this.navParams.get("postKey");
       // console.log(key);
       this.post = this.postDataService.getPost(this.postKey);
       this.image = this.post.getPostImage();
@@ -51,7 +53,7 @@ export class EditPage {
   delete(){
     console.log(this.post);
     this.postDataService.removePost(this.post);
-    this.navCtrl.pop();
+    this.navCtrl.push(UserPage);
   }
 
   private takePic(){
