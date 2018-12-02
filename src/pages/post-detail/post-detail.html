@@ -24,7 +24,10 @@
         <ion-icon ios="locate" md="md-locate"></ion-icon>
          Location
       </ion-label>
-      <ion-input type="text" [(ngModel)]="location"></ion-input>
+      <ion-input type="text" [(ngModel)]="location" (change)="searchPlace()"></ion-input>
+      <ion-list>
+        <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
+    </ion-list>
     </ion-item>
     <ion-item>
       <ion-label>

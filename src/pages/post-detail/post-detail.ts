@@ -74,6 +74,11 @@ export class PostDetailPage {
      });
   }
 
+
+
+  private searchPlace(): void {
+
+  }
   private clearImage(): void {
     this.image = "";
   }

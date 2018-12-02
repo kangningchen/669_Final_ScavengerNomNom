@@ -8,7 +8,8 @@ import { ViewDetailPage } from '../view-detail/view-detail';
 import { PostDataProvider } from "../../providers/post-data/post-data";
 import { UserDataProvider } from "../../providers/user-data/user-data";
 import { TabsPage } from '../tabs/tabs';
-
+import { LocationDataProvider } from "../../providers/location-data/location-data";
+import { Geoposition } from '@ionic-native/geolocation'; 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -22,9 +23,12 @@ export class HomePage {
   private userId:string;
   private filteredList: Post[];
   public aColor: string = "#f9f9f9";
+  private currentLocation: Geoposition;
 
-
-  constructor(public navCtrl: NavController, private postDataService: PostDataProvider, private userDataService:UserDataProvider) {
+  constructor(public navCtrl: NavController,
+    private postDataService: PostDataProvider,
+    private userDataService: UserDataProvider,
+    private locationDataService: LocationDataProvider) {
     this.postDataService.getPostObservable().subscribe( postList => {
       this.postList = postList;
       this.postList.sort(function(a,b){
@@ -33,7 +37,10 @@ export class HomePage {
     });
     this.postDataService.getUserPostListObservable().subscribe( userPostList => {
       this.userPostList = userPostList });
-
+    this.locationDataService.getObservable().subscribe(newLocation => {
+      this.currentLocation = newLocation;
+      console.log(this.currentLocation);
+    });
     this.postList = this.postDataService.getPostList();
 
     this.userId = this.userDataService.getUserId();
@@ -46,7 +53,9 @@ export class HomePage {
     this.userId = this.userDataService.getUserId();
 
   }
-
+  ionViewDidLoad(){
+    this.sortPost(null);
+  }
   addPost() {
     this.navCtrl.push(PostDetailPage);
   }
@@ -60,7 +69,7 @@ export class HomePage {
   }
 
   sortPost(cbox:Checkbox){
-    if (cbox.checked != true){
+    if (cbox == null || cbox.checked != true){
       this.postList.sort(function(a,b){
         return new Date(Date.parse(b.getPostTimestamp())).getTime() - new Date(Date.parse(a.getPostTimestamp())).getTime();
       })}
