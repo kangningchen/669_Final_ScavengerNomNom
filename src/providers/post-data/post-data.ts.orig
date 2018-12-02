@@ -90,6 +90,15 @@ export class PostDataProvider {
     this.commentObserver.next(commentList);
   }
 
+<<<<<<< HEAD
+  public addPost(title: string,
+                 location: string,
+                 timestamp: string,
+                 expiration: string,
+                 description: string,
+                 image: string,
+                 userId:string,
+=======
   public addPost(title: string, 
                  location: string, 
                  timestamp: string, 
@@ -98,6 +107,7 @@ export class PostDataProvider {
                  image: string, 
                  userId: string,
                  userName: string,
+>>>>>>> f50446e0587c0f9ad19915815498860740d67272
                  comments: Object): void {
 
     let postRef = this.db.ref('/posts');

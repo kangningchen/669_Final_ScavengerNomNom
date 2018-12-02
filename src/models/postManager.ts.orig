@@ -17,10 +17,16 @@ export class PostManager {
                           childSnapshot.val().expiration,
                           childSnapshot.val().description,
                           childSnapshot.val().image,
+<<<<<<< HEAD
+                          childSnapshot.val().userId);
+      // console.log('CommentSnap', childSnapshot.val().comments)
+      // post.initComments(childSnapshot.val().comments);
+=======
                           childSnapshot.val().userId,
                           childSnapshot.val().userName);
       console.log('CommentSnap', childSnapshot.val().comments)
       post.initComments(childSnapshot.val().comments);
+>>>>>>> f50446e0587c0f9ad19915815498860740d67272
       this.posts[childSnapshot.key] = post;
     });
   }

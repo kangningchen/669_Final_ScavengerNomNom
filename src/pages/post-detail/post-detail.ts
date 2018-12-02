@@ -28,6 +28,7 @@ export class PostDetailPage {
   private expiration: string = "";
   private image: string;
   private userId: string="";
+  private userName: string = "";
   private user: any;
   private comments: Object= {};
 
@@ -40,6 +41,7 @@ export class PostDetailPage {
       this.user = user;
     });
     this.userId = this.userDataService.getUserId();
+    this.userName = this.userDataService.getUserName();
 
   }
 
@@ -50,7 +52,7 @@ export class PostDetailPage {
   private publish() {
     console.log(this.userId);
     let timestamp = new Date().toISOString();
-    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image, this.userId, this.comments);
+    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image, this.userId, this.userName, this.comments);
     this.navCtrl.pop();
   }
 
