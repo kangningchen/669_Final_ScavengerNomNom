@@ -16,6 +16,6 @@ $ npm install --save @ionic-native/camera
 
 Geolocation
 ```
-ionic plugin add --save cordova-plugin-geolocation
-npm install --save @ionic-native/geolocation
+$ ionic cordova plugin add cordova-plugin-geolocation
+$ npm install --save @ionic-native/geolocation
 ```
