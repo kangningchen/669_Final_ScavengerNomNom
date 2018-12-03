@@ -20,7 +20,7 @@
   </ion-list>
   <ion-list>
     <ion-item>
-      <ion-label>
+      <ion-label color="dark">
         <ion-icon ios="locate" md="md-locate"></ion-icon>
          Location
       </ion-label>
@@ -29,7 +29,7 @@
     </ion-item>
         <ion-item *ngFor="let place of autocompleteItems" class="searchResults" (click)="selectPlace(place)">{{place.description}}</ion-item>
         <ion-item>
-        <ion-label>
+        <ion-label color="dark">
            Room Number
         </ion-label>
         <ion-input [(ngModel)]="roomNumber" (ionFocus)="endSearch()" placeholder="Room of the building"></ion-input>      
@@ -38,11 +38,11 @@
     </ion-list>
     <ion-list>
     <ion-item>
-      <ion-label>
+      <ion-label color="dark">
         <ion-icon ios="timer" md="md-timer"></ion-icon>
          Expiration
       </ion-label>
-      <ion-datetime displayFormat="hh:mm a MMM YYYY" pickerFormat="YYYY-MMM-DDTHH:mm" [min]="minDate" [(ngModel)]="expiration"></ion-datetime>
+      <ion-datetime displayFormat="hh:mm a MM/DD/YYYY" pickerFormat="YYYY-MMM-DDTHH:mm" [min]="minDate" [(ngModel)]="expiration"></ion-datetime>
     </ion-item>
     <ion-item (click)="takePic()" no-lines>
       <ion-icon ios="camera" md="md-camera"></ion-icon>
