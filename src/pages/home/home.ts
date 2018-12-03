@@ -25,7 +25,7 @@ export class HomePage {
   public aColor: string = "#f9f9f9";
   private currentLat: number;
   private currentLon: number;
-
+  private sortBy = "newest";
   constructor(public navCtrl: NavController,
     private postDataService: PostDataProvider,
     private userDataService: UserDataProvider,
@@ -58,7 +58,8 @@ export class HomePage {
 
   }
   ionViewDidLoad(){
-    this.sortPost(null);
+    this.sortPost();
+    this.locationDataService.getCurrentLocation();
   }
   addPost() {
     this.navCtrl.push(PostDetailPage);
@@ -72,17 +73,26 @@ export class HomePage {
     this.navCtrl.push(ViewDetailPage, {"postKey": postKey});
   }
 
-  sortPost(cbox:Checkbox){
-    if (cbox == null || cbox.checked != true){
+  sortPost(){
+    // newest, expiration, distance
+    if (this.sortBy == "newest"){
       this.filteredList.sort(function(a,b){
         return new Date(Date.parse(b.getPostTimestamp())).getTime() - new Date(Date.parse(a.getPostTimestamp())).getTime();
       });
-    } else{
+    } else if (this.sortBy == "expiration") {
       this.filteredList.sort(function(a,b){
         // console.log(b.expiration)
         return new Date(Date.parse(b.getExpiration())).getTime() - new Date(Date.parse(a.getExpiration())).getTime();
       });
-  }}
+    } else if (this.sortBy == "distance") {
+      this.filteredList.sort(function(a,b){
+        // console.log(b.expiration)
+        if (a.getDistance() == null) { return 1; }
+        if (b.getDistance() == null) { return -1; }
+        return a.getDistance() - b.getDistance();
+      });
+    }
+}
 
   filterPost(cbox:Checkbox){
     if (cbox.checked != true){

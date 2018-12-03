@@ -95,10 +95,11 @@ export class PostDetailPage {
     this.GoogleAutocomplete.getPlacePredictions({ input: this.autocompleteInput },
     (predictions, status) => {
       this.autocompleteItems = [];
-
-      predictions.forEach((prediction) => {
-        this.autocompleteItems.push(prediction);
-      });
+      if (predictions != null){
+        predictions.forEach((prediction) => {
+          this.autocompleteItems.push(prediction);
+        });
+      }
     });
   }
 

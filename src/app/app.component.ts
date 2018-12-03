@@ -6,7 +6,6 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsPage } from '../pages/tabs/tabs';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login'
-import { LocationDataProvider } from '../providers/location-data/location-data'
 import firebase from 'firebase';
 declare var config;
 
