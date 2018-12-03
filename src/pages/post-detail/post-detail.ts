@@ -5,6 +5,7 @@ import { PostDataProvider } from "../../providers/post-data/post-data";
 import { UserDataProvider } from "../../providers/user-data/user-data";
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Location } from '../../models/location'
+import * as moment from 'moment';
 
 const PLACEHOLDER_IMAGE: string = "../../assets/imgs/placeholder.png";
 declare var google;
@@ -37,6 +38,9 @@ export class PostDetailPage {
   private autocompleteInput = "";
   private geocoder: any;
   private autocompleteItems: Array<object>;
+  private minDate: string = "";
+
+  
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               private postDataService: PostDataProvider,
@@ -51,6 +55,8 @@ export class PostDetailPage {
     this.geocoder = new google.maps.Geocoder;
     this.autocompleteInput = "";
     this.autocompleteItems = [];
+    this.minDate = moment().format();
+    this.expiration = moment().format();
   }
 
   ionViewDidLoad() {
@@ -59,7 +65,7 @@ export class PostDetailPage {
 
   private publish() {
     console.log(this.userId);
-    let timestamp = new Date().toISOString();
+    let timestamp = moment().format();
     this.location.setDescription(this.autocompleteInput);
     this.location.setRoomNumber(this.roomNumber);
     this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image, this.userId, this.userName, this.comments);

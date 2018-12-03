@@ -42,7 +42,7 @@
         <ion-icon ios="timer" md="md-timer"></ion-icon>
          Expiration
       </ion-label>
-      <ion-datetime displayFormat="hh:mm a MMM YYYY" pickerFormat="YYYY-MMM-DDTHH:mm" [(ngModel)]="expiration"></ion-datetime>
+      <ion-datetime displayFormat="hh:mm a MMM YYYY" pickerFormat="YYYY-MMM-DDTHH:mm" [min]="minDate" [(ngModel)]="expiration"></ion-datetime>
     </ion-item>
     <ion-item (click)="takePic()" no-lines>
       <ion-icon ios="camera" md="md-camera"></ion-icon>
