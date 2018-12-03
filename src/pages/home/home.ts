@@ -42,6 +42,9 @@ export class HomePage {
     this.userId = this.userDataService.getUserId();
     this.filteredList = this.postList;
     this.locationDataService.getObservable().subscribe(newLocation => {
+      if (newLocation === undefined){
+        return
+      }
       this.currentLat = newLocation.coords.latitude;
       this.currentLon = newLocation.coords.longitude;
       for (var i = 0; i < this.filteredList.length; i++){
