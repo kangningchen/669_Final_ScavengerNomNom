@@ -17,6 +17,7 @@ export class Post {
   private comments: Object = {};
 
 
+
   public constructor ( key: string,
                        title: string,
                        location: any,

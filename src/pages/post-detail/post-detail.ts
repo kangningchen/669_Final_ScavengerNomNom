@@ -7,7 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 
 
 const PLACEHOLDER_IMAGE: string = "../../assets/imgs/placeholder.png";
-
+declare var google;
 /**
  * Generated class for the PostDetailPage page.
  *
@@ -31,7 +31,14 @@ export class PostDetailPage {
   private userName: string = "";
   private user: any;
   private comments: Object= {};
+  private postLocationText = "";
+  private postLocationCoord:object = {};
 
+  // google map api
+  private GoogleAutocomplete:any;
+  private autocompleteInput = "";
+  private geocoder: any;
+  private autocompleteItems: Array<object>;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               private postDataService: PostDataProvider,
@@ -42,7 +49,10 @@ export class PostDetailPage {
     });
     this.userId = this.userDataService.getUserId();
     this.userName = this.userDataService.getUserName();
-
+    this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
+    this.geocoder = new google.maps.Geocoder;
+    this.autocompleteInput = "";
+    this.autocompleteItems = [];
   }
 
   ionViewDidLoad() {
@@ -76,7 +86,36 @@ export class PostDetailPage {
 
 
 
-  private searchPlace(): void {
+  private updateSearchResults(): void {
+    console.log(this.autocompleteInput);
+    // From: https://ionicthemes.com/tutorials/about/ionic-2-google-maps-google-places-geolocation
+    if (this.autocompleteInput == '') {
+      this.autocompleteItems = [];
+      return;
+    }
+    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocompleteInput },
+    (predictions, status) => {
+      this.autocompleteItems = [];
+
+      predictions.forEach((prediction) => {
+        this.autocompleteItems.push(prediction);
+      });
+    });
+  }
+
+  private selectPlace(place: any):void {
+    this.autocompleteItems = [];
+    this.geocoder.geocode({'placeId': place.place_id}, (results, status) => {
+      if(status === 'OK' && results[0]){
+        console.log(results[0]);
+        this.location = {
+          description: place.description,
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng()
+        }
+        this.autocompleteInput = place.description;
+      }
+    });
 
   }
   private clearImage(): void {

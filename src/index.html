@@ -29,6 +29,13 @@
 
   <link href="build/main.css" rel="stylesheet">
   <script src="firebase_key.js"></script>
+
+  <script>
+    var s = document.createElement("script");
+    s.type = "text/javascript";
+    s.src = 'https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_PLACES_API + '&libraries=places';
+    document.head.appendChild(s);
+  </script>
 </head>
 <body>
 

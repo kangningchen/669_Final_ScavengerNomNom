@@ -24,11 +24,12 @@
         <ion-icon ios="locate" md="md-locate"></ion-icon>
          Location
       </ion-label>
-      <ion-input type="text" [(ngModel)]="location" (change)="searchPlace()"></ion-input>
-      <ion-list>
-        <ion-item *ngFor="let place of places" (click)="selectPlace(place)">{{place.description}}</ion-item>
-    </ion-list>
+      <ion-input [(ngModel)]="autocompleteInput" (input)="updateSearchResults()" placeholder="Search for a place"></ion-input>      
+      
     </ion-item>
+        <ion-item *ngFor="let place of autocompleteItems" (click)="selectPlace(place)">{{place.description}}</ion-item>
+    </ion-list>
+    <ion-list>
     <ion-item>
       <ion-label>
         <ion-icon ios="timer" md="md-timer"></ion-icon>
