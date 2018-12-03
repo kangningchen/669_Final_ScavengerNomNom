@@ -191,5 +191,10 @@ export class Post {
     delete this.comments[key];
   }
 
+  public getNumOfComments(): number {
+    let commentList = this.getCommentList();
+    return commentList.length;
+  }
+
 
 }

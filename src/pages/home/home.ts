@@ -107,6 +107,4 @@ export class HomePage {
     }
   }
 
-
-
 }

@@ -36,6 +36,7 @@ export class ViewDetailPage {
   private commentatorUserName: string;
   private commentatorAvatar: string = "../../assets/imgs/avatar.jpg";
   private commentList: Comment[] = [];
+  private numComments: number;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -49,10 +50,15 @@ export class ViewDetailPage {
     // get post owner id
     this.userId = this.userDataService.getUserId();
     this.location = this.post.getLocation();
-    // get comment list
+
+    // get comment list and num of comments
     this.postDataService.getCommentObservable().subscribe( commentList => {
-      this.commentList = commentList });
+      this.commentList = commentList;
+      this.numComments = commentList.length;
+      console.log("NUMCOMM", this.numComments);
+     });
     this.commentList = this.post.getCommentList();
+    this.numComments = this.post.getNumOfComments();
 
     // retrieve current user's id and username to be commentatorId and commentatorUserName
     this.commentatorId = this.userDataService.getUserId();
