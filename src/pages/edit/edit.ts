@@ -53,7 +53,11 @@ export class EditPage {
   delete(){
     console.log(this.post);
     this.postDataService.removePost(this.post);
-    this.navCtrl.push(UserPage);
+    console.log(this.navCtrl.length());
+    if (this.navCtrl.length() > 2) {
+      this.navCtrl.remove(this.navCtrl.getPrevious().index);
+    }
+    this.navCtrl.pop();
   }
 
   private takePic(){
