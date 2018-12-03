@@ -34,7 +34,9 @@
         <p>{{ post.getPostDescription() }}</p>
         <ion-note>Expire in:</ion-note>
         <ion-note id="countDown">{{ countDownString }}</ion-note>
-    <ion-label>Location: {{ post.getLocation() }}</ion-label>
+    <ion-label>Location: </ion-label>
+    <ion-label style="margin-bottom: 0px">{{ location.getDescription() }}</ion-label>
+    <ion-label style="margin-top: 0px">{{ location.getRoomNumber() }}</ion-label>
 
 
   </ion-card-content>
@@ -57,7 +59,7 @@
       <ion-col>
         <button ion-button icon-start clear small>
           <ion-icon name="compass"></ion-icon>
-          <div>0.5 mi</div>
+          <div *ngIf="post.getDistance()">{{ post.getDistance() | number:'1.1-2'}} mi</div>
         </button>
       </ion-col>
     </ion-row>

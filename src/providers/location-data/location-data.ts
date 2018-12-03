@@ -29,6 +29,7 @@ export class LocationDataProvider {
     this.geolocation.getCurrentPosition(this.options).then((pos : Geoposition) => {
 
       this.currentPos = pos;
+      console.log("here");
       this.notifySubscribers();
     },(err : PositionError)=>{
       console.log("error : " + err.message);

@@ -4,7 +4,7 @@ import { HomePage } from '../home/home';
 import { PostDataProvider } from "../../providers/post-data/post-data";
 import { UserDataProvider } from "../../providers/user-data/user-data";
 import { Camera, CameraOptions } from '@ionic-native/camera';
-
+import { Location } from '../../models/location'
 
 const PLACEHOLDER_IMAGE: string = "../../assets/imgs/placeholder.png";
 declare var google;
@@ -24,16 +24,14 @@ export class PostDetailPage {
 
   private title: string = "";
   private description: string = "";
-  private location: any = "";
+  private location: Location = new Location();
   private expiration: string = "";
   private image: string;
   private userId: string="";
   private userName: string = "";
   private user: any;
   private comments: Object= {};
-  private postLocationText = "";
-  private postLocationCoord:object = {};
-
+  private roomNumber = "";
   // google map api
   private GoogleAutocomplete:any;
   private autocompleteInput = "";
@@ -62,6 +60,8 @@ export class PostDetailPage {
   private publish() {
     console.log(this.userId);
     let timestamp = new Date().toISOString();
+    this.location.setDescription(this.autocompleteInput);
+    this.location.setRoomNumber(this.roomNumber);
     this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image, this.userId, this.userName, this.comments);
     this.navCtrl.pop();
   }
@@ -87,7 +87,6 @@ export class PostDetailPage {
 
 
   private updateSearchResults(): void {
-    console.log(this.autocompleteInput);
     // From: https://ionicthemes.com/tutorials/about/ionic-2-google-maps-google-places-geolocation
     if (this.autocompleteInput == '') {
       this.autocompleteItems = [];
@@ -106,17 +105,23 @@ export class PostDetailPage {
   private selectPlace(place: any):void {
     this.autocompleteItems = [];
     this.geocoder.geocode({'placeId': place.place_id}, (results, status) => {
-      if(status === 'OK' && results[0]){
-        console.log(results[0]);
-        this.location = {
-          description: place.description,
-          lat: results[0].geometry.location.lat(),
-          lng: results[0].geometry.location.lng()
-        }
+      if (status === 'OK' && results[0]) {
+        this.location = new Location(place.description, "", results[0].geometry.location.lat(), results[0].geometry.location.lng());
         this.autocompleteInput = place.description;
       }
     });
 
+  }
+  private startSearch():void {
+    this.autocompleteItems = [];
+    this.autocompleteInput = "";
+    this.location = new Location();
+  }
+  private endSearch():void {
+    this.autocompleteItems = [];
+    if (this.location.isNew()){
+      this.location = new Location(this.autocompleteInput, "", null, null);
+    }
   }
   private clearImage(): void {
     this.image = "";

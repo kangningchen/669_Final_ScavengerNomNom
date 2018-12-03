@@ -23,7 +23,8 @@ export class HomePage {
   private userId:string;
   private filteredList: Post[];
   public aColor: string = "#f9f9f9";
-  private currentLocation: Geoposition;
+  private currentLat: number;
+  private currentLon: number;
 
   constructor(public navCtrl: NavController,
     private postDataService: PostDataProvider,
@@ -37,15 +38,18 @@ export class HomePage {
     });
     this.postDataService.getUserPostListObservable().subscribe( userPostList => {
       this.userPostList = userPostList });
-    this.locationDataService.getObservable().subscribe(newLocation => {
-      this.currentLocation = newLocation;
-      console.log(this.currentLocation);
-    });
     this.postList = this.postDataService.getPostList();
-
     this.userId = this.userDataService.getUserId();
     this.filteredList = this.postList;
-
+    this.locationDataService.getObservable().subscribe(newLocation => {
+      this.currentLat = newLocation.coords.latitude;
+      this.currentLon = newLocation.coords.longitude;
+      for (var i = 0; i < this.filteredList.length; i++){
+        let distance = this.filteredList[i].getLocation().calculateDistance(this.currentLat, this.currentLon);
+        this.filteredList[i].setDistance(distance);
+      }
+      console.log(this.filteredList);
+    });
   }
 
   ngOnInit() {
@@ -70,25 +74,25 @@ export class HomePage {
 
   sortPost(cbox:Checkbox){
     if (cbox == null || cbox.checked != true){
-      this.postList.sort(function(a,b){
+      this.filteredList.sort(function(a,b){
         return new Date(Date.parse(b.getPostTimestamp())).getTime() - new Date(Date.parse(a.getPostTimestamp())).getTime();
-      })}
-      else{
-    this.postList.sort(function(a,b){
-      // console.log(b.expiration)
-      return new Date(Date.parse(b.getExpiration())).getTime() - new Date(Date.parse(a.getExpiration())).getTime();
-    })
+      });
+    } else{
+      this.filteredList.sort(function(a,b){
+        // console.log(b.expiration)
+        return new Date(Date.parse(b.getExpiration())).getTime() - new Date(Date.parse(a.getExpiration())).getTime();
+      });
   }}
 
   filterPost(cbox:Checkbox){
     if (cbox.checked != true){
       this.filteredList = this.postList
-    }else{
-    this.filteredList = this.postList.filter((post) => {
-      return Date.parse(post.getExpiration()) > Date.now();}
-    );
-}
-}
+    } else{
+      this.filteredList = this.postList.filter((post) => {
+        return Date.parse(post.getExpiration()) > Date.now();
+      });
+    }
+  }
 
 
 

@@ -28,6 +28,7 @@ export class ViewDetailPage {
   private post: Post;
   private postList: Post[];
   private userId: string;
+  private location: object;
   private timeCounterInterval: any;
   private countDownString = "";
   private commentText: string = "";
@@ -47,7 +48,7 @@ export class ViewDetailPage {
 
     // get post owner id
     this.userId = this.userDataService.getUserId();
-
+    this.location = this.post.getLocation();
     // get comment list
     this.postDataService.getCommentObservable().subscribe( commentList => {
       this.commentList = commentList });

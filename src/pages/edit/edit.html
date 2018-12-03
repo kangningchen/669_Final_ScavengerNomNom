@@ -29,8 +29,19 @@
         <ion-icon ios="locate" md="md-locate"></ion-icon>
          Location
       </ion-label>
-      <ion-input type="text" [(ngModel)]="post.location"></ion-input>
+      <ion-input [(ngModel)]="autocompleteInput" (input)="updateSearchResults()" (ionFocus)="startSearch()" placeholder="Search for a place"></ion-input>      
+      
     </ion-item>
+        <ion-item *ngFor="let place of autocompleteItems" class="searchResults" (click)="selectPlace(place)">{{place.description}}</ion-item>
+        <ion-item>
+        <ion-label>
+           Room Number
+        </ion-label>
+        <ion-input [(ngModel)]="roomNumber" (ionFocus)="endSearch()" placeholder="Room of the building"></ion-input>      
+      
+      </ion-item>
+    </ion-list>
+    <ion-list>
     <ion-item>
       <ion-label>
         <ion-icon ios="timer" md="md-timer"></ion-icon>

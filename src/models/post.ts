@@ -1,12 +1,12 @@
 import { Comment } from './comment';
-
+import { Location } from './location'
 
 
 export class Post {
   private key: string;
   private title: string;
 
-  private location: any;
+  private location: Location;
   private timestamp: string;
   private expiration: string;
 
@@ -15,6 +15,9 @@ export class Post {
   private userId: string;
   private userName: string;
   private comments: Object = {};
+
+  // temp
+  private distance: number = null;
 
 
 
@@ -56,11 +59,11 @@ export class Post {
     this.title = title;
   }
 
-  public getLocation(): any {
+  public getLocation(): Location {
     return this.location;
   }
 
-  public setLocation(location: any): void {
+  public setLocation(location: Location): void {
     this.location = location;
   }
 
@@ -101,6 +104,13 @@ export class Post {
     this.userId = userId;
   }
 
+  public setDistance(newDistance: number):void {
+    this.distance = newDistance;
+  }
+
+  public getDistance(): number{
+    return this.distance;
+  }
   public getUserId(): string {
     return this.userId;
   }
@@ -126,6 +136,12 @@ export class Post {
       this.comments[k] = comment;
       console.log('Init comments:', this.comments);
     }
+  }
+
+  public initLocation(location: any) {
+    console.log(location);
+    let newLocation = new Location(location.description, location.roomNumber, location.latitude, location.longitude);
+    this.location = newLocation;
   }
 
   public getComments(): Object {

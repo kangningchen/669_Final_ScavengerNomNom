@@ -60,7 +60,7 @@
       <ion-col>
         <button ion-button icon-start clear small>
           <ion-icon name="compass"></ion-icon>
-          <div>0.5 mi</div>
+          <div *ngIf="post.getDistance()">{{ post.getDistance() | number:'1.1-2'}} mi</div>
         </button>
       </ion-col>
       <!-- <div *ngIf="post.userId==this.userId">
