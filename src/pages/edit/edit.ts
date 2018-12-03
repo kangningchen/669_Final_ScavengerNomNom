@@ -4,6 +4,7 @@ import { HomePage } from '../home/home';
 import { PostDataProvider } from "../../providers/post-data/post-data";
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { UserPage } from '../user/user';
+import { Location } from '../../models/location'
 
 // import { UserDataProvider } from "../../providers/user-data/user-data";
 // import { PostManager } from "../../models/postManager";
@@ -16,7 +17,7 @@ import { UserPage } from '../user/user';
 //  */
 //
 const PLACEHOLDER_IMAGE: string = "../../assets/imgs/placeholder.png";
-
+declare var google;
 @IonicPage()
 @Component({
   selector: 'page-edit',
@@ -26,7 +27,13 @@ export class EditPage {
   private postKey: string;
   private post:any;
   private image: string;
-
+  private location: Location;
+  private roomNumber = "";
+  // google map api
+  private GoogleAutocomplete:any;
+  private autocompleteInput = "";
+  private geocoder: any;
+  private autocompleteItems: Array<object>;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -36,7 +43,11 @@ export class EditPage {
       // console.log(key);
       this.post = this.postDataService.getPost(this.postKey);
       this.image = this.post.getPostImage();
-
+      this.location = this.post.getLocation();
+      this.autocompleteInput = this.location.getDescription();
+      this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
+      this.geocoder = new google.maps.Geocoder;
+      this.autocompleteItems = [];
   }
 
   ionViewDidLoad() {
@@ -46,6 +57,9 @@ export class EditPage {
 
   update() {
     // this.post.setPostImage(this.image);
+    this.location.setDescription(this.autocompleteInput);
+    this.location.setRoomNumber(this.roomNumber);
+    this.post.setLocation(this.location);
     this.postDataService.updatePost(this.postKey);
     this.navCtrl.pop();
   }
@@ -53,7 +67,11 @@ export class EditPage {
   delete(){
     console.log(this.post);
     this.postDataService.removePost(this.post);
-    this.navCtrl.push(UserPage);
+    console.log(this.navCtrl.length());
+    if (this.navCtrl.length() > 2) {
+      this.navCtrl.remove(this.navCtrl.getPrevious().index);
+    }
+    this.navCtrl.pop();
   }
 
   private takePic(){
@@ -78,6 +96,44 @@ export class EditPage {
 
   private clearImage(): void {
     this.image = "";
+  }
+
+  private updateSearchResults(): void {
+    // From: https://ionicthemes.com/tutorials/about/ionic-2-google-maps-google-places-geolocation
+    if (this.autocompleteInput == '') {
+      this.autocompleteItems = [];
+      return;
+    }
+    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocompleteInput },
+    (predictions, status) => {
+      this.autocompleteItems = [];
+
+      predictions.forEach((prediction) => {
+        this.autocompleteItems.push(prediction);
+      });
+    });
+  }
+
+  private selectPlace(place: any):void {
+    this.autocompleteItems = [];
+    this.geocoder.geocode({'placeId': place.place_id}, (results, status) => {
+      if (status === 'OK' && results[0]) {
+        this.location = new Location(place.description, "", results[0].geometry.location.lat(), results[0].geometry.location.lng());
+        this.autocompleteInput = place.description;
+      }
+    });
+
+  }
+  private startSearch():void {
+    this.autocompleteItems = [];
+    this.autocompleteInput = "";
+    this.location = new Location();
+  }
+  private endSearch():void {
+    this.autocompleteItems = [];
+    if (this.location.isNew()){
+      this.location = new Location(this.autocompleteInput, "", null, null);
+    }
   }
 
 }

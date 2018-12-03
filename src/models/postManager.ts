@@ -12,7 +12,7 @@ export class PostManager {
     snapshot.forEach( childSnapshot => {
       let post = new Post(childSnapshot.key,
                           childSnapshot.val().title,
-                          childSnapshot.val().location,
+                          null,
                           childSnapshot.val().timestamp,
                           childSnapshot.val().expiration,
                           childSnapshot.val().description,
@@ -21,6 +21,7 @@ export class PostManager {
                           childSnapshot.val().userName);
       console.log('CommentSnap', childSnapshot.val().comments)
       post.initComments(childSnapshot.val().comments);
+      post.initLocation(childSnapshot.val().location);
       this.posts[childSnapshot.key] = post;
     });
   }
@@ -55,7 +56,7 @@ export class PostManager {
 
   public addPost(key: string,
                 title: string,
-                location: any = null,
+                location: any,
                 timestamp: string = "",
                 expiration: string,
                 description: string = "",

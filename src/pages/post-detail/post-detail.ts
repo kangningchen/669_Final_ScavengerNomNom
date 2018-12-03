@@ -4,10 +4,10 @@ import { HomePage } from '../home/home';
 import { PostDataProvider } from "../../providers/post-data/post-data";
 import { UserDataProvider } from "../../providers/user-data/user-data";
 import { Camera, CameraOptions } from '@ionic-native/camera';
-
+import { Location } from '../../models/location'
 
 const PLACEHOLDER_IMAGE: string = "../../assets/imgs/placeholder.png";
-
+declare var google;
 /**
  * Generated class for the PostDetailPage page.
  *
@@ -24,14 +24,19 @@ export class PostDetailPage {
 
   private title: string = "";
   private description: string = "";
-  private location: any = "";
+  private location: Location = new Location();
   private expiration: string = "";
   private image: string;
   private userId: string="";
   private userName: string = "";
   private user: any;
   private comments: Object= {};
-
+  private roomNumber = "";
+  // google map api
+  private GoogleAutocomplete:any;
+  private autocompleteInput = "";
+  private geocoder: any;
+  private autocompleteItems: Array<object>;
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               private postDataService: PostDataProvider,
@@ -42,7 +47,10 @@ export class PostDetailPage {
     });
     this.userId = this.userDataService.getUserId();
     this.userName = this.userDataService.getUserName();
-
+    this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
+    this.geocoder = new google.maps.Geocoder;
+    this.autocompleteInput = "";
+    this.autocompleteItems = [];
   }
 
   ionViewDidLoad() {
@@ -52,6 +60,8 @@ export class PostDetailPage {
   private publish() {
     console.log(this.userId);
     let timestamp = new Date().toISOString();
+    this.location.setDescription(this.autocompleteInput);
+    this.location.setRoomNumber(this.roomNumber);
     this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image, this.userId, this.userName, this.comments);
     this.navCtrl.pop();
   }
@@ -74,6 +84,46 @@ export class PostDetailPage {
      });
   }
 
+
+
+  private updateSearchResults(): void {
+    // From: https://ionicthemes.com/tutorials/about/ionic-2-google-maps-google-places-geolocation
+    if (this.autocompleteInput == '') {
+      this.autocompleteItems = [];
+      return;
+    }
+    this.GoogleAutocomplete.getPlacePredictions({ input: this.autocompleteInput },
+    (predictions, status) => {
+      this.autocompleteItems = [];
+      if (predictions != null){
+        predictions.forEach((prediction) => {
+          this.autocompleteItems.push(prediction);
+        });
+      }
+    });
+  }
+
+  private selectPlace(place: any):void {
+    this.autocompleteItems = [];
+    this.geocoder.geocode({'placeId': place.place_id}, (results, status) => {
+      if (status === 'OK' && results[0]) {
+        this.location = new Location(place.description, "", results[0].geometry.location.lat(), results[0].geometry.location.lng());
+        this.autocompleteInput = place.description;
+      }
+    });
+
+  }
+  private startSearch():void {
+    this.autocompleteItems = [];
+    this.autocompleteInput = "";
+    this.location = new Location();
+  }
+  private endSearch():void {
+    this.autocompleteItems = [];
+    if (this.location.isNew()){
+      this.location = new Location(this.autocompleteInput, "", null, null);
+    }
+  }
   private clearImage(): void {
     this.image = "";
   }

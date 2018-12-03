@@ -5,6 +5,7 @@ import { PostManager } from '../../models/postManager';
 import { Comment } from '../../models/comment';
 import { Observable } from 'rxjs';
 import { Observer } from 'rxjs';
+import { Location } from '../../models/location'
 import firebase from 'firebase';
 /*
   Generated class for the PostDataProvider provider.
@@ -91,7 +92,7 @@ export class PostDataProvider {
   }
 
   public addPost(title: string, 
-                 location: string, 
+                 location: Location, 
                  timestamp: string, 
                  expiration: string, 
                  description: string, 
