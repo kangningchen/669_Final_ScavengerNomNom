@@ -14,6 +14,33 @@
 
 
 <ion-content padding>
+    <ion-avatar>
+  <img [src]="userPic">
+  </ion-avatar>
+  <ion-avatar item-start *ngIf="uploadImage != null">
+    <!-- <span *ngIf="uploadImage != null"> -->
+      <img id="checkinImage" [src]="uploadImage" (load)="imageLoaded()" />
+    <!-- </span> -->
+    <!-- <span *ngIf="processing">
+        <ion-spinner></ion-spinner>
+        <h1>Processing...</h1>
+    </span> -->
+    <!-- <img [src]="profilePic"> -->
+  </ion-avatar>
+
+
+<ion-card>
+  <input type="file" id="fileLoader" #fileLoader name="files" title="Load File" hidden />
+  <ion-toolbar color="primary">
+    <ion-buttons>
+      <button ion-button icon-left (click)="presentActionSheet(fileLoader)">
+        <ion-icon name="camera"></ion-icon>Select profile photo
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+
+    </ion-card>
 
   <!-- <ion-item> -->
   <!-- <ion-row>

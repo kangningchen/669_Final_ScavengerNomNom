@@ -14,6 +14,7 @@ export class Post {
   private image: string;
   private userId: string;
   private userName: string;
+  private userPic: any;
   private comments: Object = {};
 
   // temp
@@ -29,7 +30,8 @@ export class Post {
                        description: string,
                        image: string,
                        userId:string,
-                       userName: string) {
+                       userName: string,
+                       userPic:any) {
     this.key = key;
     this.title = title;
     this.location = location;
@@ -44,6 +46,7 @@ export class Post {
     this.image = image;
     this.userId = userId;
     this.userName = userName;
+    this.userPic = userPic;
     console.log(this.comments);
   }
 
@@ -124,14 +127,19 @@ export class Post {
   }
   // comment management
 
+ public getUserPic(){
+   return this.userPic;
+ }
+
+
   public initComments(commentSnapshot: Object) {
     for (let k in commentSnapshot) {
       let commentObject = commentSnapshot[k]
-      let comment = new Comment(k, 
-                                commentObject.commentatorId, 
+      let comment = new Comment(k,
+                                commentObject.commentatorId,
                                 commentObject.commentatorUserName,
-                                commentObject.commentatorAvatar, 
-                                commentObject.commentTimestamp, 
+                                commentObject.commentatorAvatar,
+                                commentObject.commentTimestamp,
                                 commentObject.commentText)
       this.comments[k] = comment;
       console.log('Init comments:', this.comments);
@@ -170,7 +178,7 @@ export class Post {
                     commentatorAvatar: string,
                     commentTimestamp: string,
                     commentText:string): Comment {
-    let comment = new Comment(commentkey, commentatorId, commentatorUserName, 
+    let comment = new Comment(commentkey, commentatorId, commentatorUserName,
                               commentatorAvatar, commentTimestamp, commentText);
     if (this.comments === undefined) {
       this.comments = {};

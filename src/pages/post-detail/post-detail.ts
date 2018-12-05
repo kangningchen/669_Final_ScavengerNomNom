@@ -8,7 +8,7 @@ import { Location } from '../../models/location'
 import * as moment from 'moment';
 
 const PLACEHOLDER_IMAGE: string = "../../assets/imgs/placeholder.png";
-declare var google;
+declare var google:any;
 /**
  * Generated class for the PostDetailPage page.
  *
@@ -40,9 +40,9 @@ export class PostDetailPage {
   private autocompleteItems: Array<object>;
   private minDate: string = "";
 
-  
-  constructor(public navCtrl: NavController, 
-              public navParams: NavParams, 
+
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
               private postDataService: PostDataProvider,
               private userDataService:UserDataProvider,
               private camera: Camera) {
@@ -51,6 +51,7 @@ export class PostDetailPage {
     });
     this.userId = this.userDataService.getUserId();
     this.userName = this.userDataService.getUserName();
+    this.userPic=this.userDataService.getUserPic();
     this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
     this.geocoder = new google.maps.Geocoder;
     this.autocompleteInput = "";
@@ -63,12 +64,13 @@ export class PostDetailPage {
     console.log('ionViewDidLoad PostDetailPage');
   }
 
+
   private publish() {
     console.log(this.userId);
     let timestamp = moment().format();
     this.location.setDescription(this.autocompleteInput);
     this.location.setRoomNumber(this.roomNumber);
-    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image, this.userId, this.userName, this.comments);
+    this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image, this.userId, this.userName, this.comments,this.userPic);
     this.navCtrl.pop();
   }
 

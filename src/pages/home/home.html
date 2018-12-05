@@ -45,7 +45,8 @@
 
     <ion-item>
       <ion-avatar item-start>
-        <img src="../../assets/imgs/avatar.jpg">
+        <!-- <img src="../../assets/imgs/avatar.jpg"> -->
+        <img [src]="userPic">
       </ion-avatar>
       <h2>{{ post.getPostTitle() }}</h2>
       <ion-note>{{ post.getUserName() }}</ion-note>

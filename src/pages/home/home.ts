@@ -9,7 +9,7 @@ import { PostDataProvider } from "../../providers/post-data/post-data";
 import { UserDataProvider } from "../../providers/user-data/user-data";
 import { TabsPage } from '../tabs/tabs';
 import { LocationDataProvider } from "../../providers/location-data/location-data";
-import { Geoposition } from '@ionic-native/geolocation'; 
+import { Geoposition } from '@ionic-native/geolocation';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -21,6 +21,7 @@ export class HomePage {
   private userPostList: Post[];
   private user: any;
   private userId:string;
+  private userPic:any;
   private filteredList: Post[];
   public aColor: string = "#f9f9f9";
   private currentLat: number;
@@ -40,6 +41,7 @@ export class HomePage {
       this.userPostList = userPostList });
     this.postList = this.postDataService.getPostList();
     this.userId = this.userDataService.getUserId();
+    this.userPic = this.userDataService.getUserPic();
     this.filteredList = this.postList;
     this.locationDataService.getObservable().subscribe(newLocation => {
       if (newLocation === undefined){

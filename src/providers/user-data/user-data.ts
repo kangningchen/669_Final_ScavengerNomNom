@@ -61,6 +61,7 @@ export class UserDataProvider {
     }
   }
 
+
   public getUserId():string {
     if (this.user){
       return this.user.uid;
@@ -78,6 +79,17 @@ export class UserDataProvider {
       this.validateUser(user)
     );
   }
+  public setUserPic(src:any): void{
+    this.userPic = src;
+    this.notifySubscribers();
+
+  }
+
+  public getUserPic() {
+     return this.userPic;
+  }
+
+
   private validateUser(user):void {
     if (user) {
       // User is signed in.
