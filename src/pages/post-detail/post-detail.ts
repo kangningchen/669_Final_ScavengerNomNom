@@ -65,7 +65,7 @@ export class PostDetailPage {
 
   private publish() {
     console.log(this.userId);
-    let timestamp = moment().format();
+    let timestamp = moment().format('MMMM Do YYYY, h:mm:ss a');
     this.location.setDescription(this.autocompleteInput);
     this.location.setRoomNumber(this.roomNumber);
     this.postDataService.addPost(this.title, this.location, timestamp, this.expiration, this.description, this.image, this.userId, this.userName, this.comments);
