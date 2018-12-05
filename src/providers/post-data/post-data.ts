@@ -47,6 +47,7 @@ export class PostDataProvider {
     let postRef = this.db.ref('/posts');
 
     postRef.on('value', snapshot => {
+      console.log(snapshot)
       this.postManager.initFromFirebase(snapshot);
       this.notifySubscribers();
     });

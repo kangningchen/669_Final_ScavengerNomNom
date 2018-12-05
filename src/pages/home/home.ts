@@ -32,9 +32,8 @@ export class HomePage {
     private locationDataService: LocationDataProvider) {
     this.postDataService.getPostObservable().subscribe( postList => {
       this.postList = postList;
-      this.postList.sort(function(a,b){
-        return new Date(Date.parse(b.getPostTimestamp())).getTime() - new Date(Date.parse(a.getPostTimestamp())).getTime();})
       this.filteredList = this.postList;
+      this.sortPost();
     });
     this.postDataService.getUserPostListObservable().subscribe( userPostList => {
       this.userPostList = userPostList });

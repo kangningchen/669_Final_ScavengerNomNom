@@ -9,6 +9,7 @@ export class PostManager {
   }
 
   public initFromFirebase(snapshot): void {
+    this.posts = {};
     snapshot.forEach( childSnapshot => {
       let post = new Post(childSnapshot.key,
                           childSnapshot.val().title,
