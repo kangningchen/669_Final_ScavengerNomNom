@@ -107,10 +107,11 @@ export class EditPage {
     this.GoogleAutocomplete.getPlacePredictions({ input: this.autocompleteInput },
     (predictions, status) => {
       this.autocompleteItems = [];
-
+      if (predictions != null){
       predictions.forEach((prediction) => {
         this.autocompleteItems.push(prediction);
       });
+    }
     });
   }
 
