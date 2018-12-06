@@ -7,6 +7,8 @@ import { Comment } from '../../models/comment';
 import { UserDataProvider } from "../../providers/user-data/user-data";
 import { EditPage } from '../edit/edit';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import * as moment from 'moment';
+
 
 
 
@@ -119,7 +121,7 @@ export class ViewDetailPage {
                     commentatorUserName: string,
                     commentatorAvatar: string,
                     commentText: string) {
-    let timestamp = new Date().toISOString();
+    let timestamp = moment().format('MMMM Do YYYY, h:mm:ss a')
     this.postDataService.addComment(this.postKey,
                                     this.commentatorId,
                                     this.commentatorUserName,
