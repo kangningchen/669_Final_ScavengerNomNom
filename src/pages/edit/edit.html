@@ -29,16 +29,16 @@
         <ion-icon ios="locate" md="md-locate"></ion-icon>
          Location
       </ion-label>
-      <ion-input [(ngModel)]="autocompleteInput" (input)="updateSearchResults()" (ionFocus)="startSearch()" placeholder="Search for a place"></ion-input>      
-      
+      <ion-input [(ngModel)]="autocompleteInput" (input)="updateSearchResults()" (ionFocus)="startSearch()" placeholder="Search for a place"></ion-input>
+
     </ion-item>
         <ion-item *ngFor="let place of autocompleteItems" class="searchResults" (click)="selectPlace(place)">{{place.description}}</ion-item>
         <ion-item>
         <ion-label>
            Room Number
         </ion-label>
-        <ion-input [(ngModel)]="roomNumber" (ionFocus)="endSearch()" placeholder="Room of the building"></ion-input>      
-      
+        <ion-input [(ngModel)]="roomNumber" (ionFocus)="endSearch()" placeholder="Room of the building"></ion-input>
+
       </ion-item>
     </ion-list>
     <ion-list>
@@ -67,7 +67,7 @@
   <ion-buttons>
     <button ion-button clear small float-left (click)="update()">
       <ion-icon name="create"></ion-icon>UPDATE</button>
-    <button ion-button clear small color='danger' (click)="delete()">
+    <button ion-button clear small float-right color='danger' (click)="delete()">
       <ion-icon name="trash"></ion-icon>DELETE</button>
     </ion-buttons>
 
