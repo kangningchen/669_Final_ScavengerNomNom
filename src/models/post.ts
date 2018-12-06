@@ -79,7 +79,12 @@ export class Post {
   }
 
   public getExpirationRelative(): string {
+
+    
     let exRelative = moment(this.expiration).fromNow();
+    if (Date.parse(this.expiration) < Date.now()){
+      return "Expired: " + exRelative;
+    }
     return "Expire: " + exRelative;
 
   }
