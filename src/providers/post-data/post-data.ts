@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { Observer } from 'rxjs';
 import { Location } from '../../models/location'
 import firebase from 'firebase';
+import { ToastController } from 'ionic-angular';
+
 /*
   Generated class for the PostDataProvider provider.
 
@@ -26,7 +28,7 @@ export class PostDataProvider {
   private db: any;
 
 
-  constructor() {
+  constructor(public toastCtrl: ToastController) {
     console.log('Hello PostDataProvider Provider');
 
     this.postManager = new PostManager();
@@ -45,12 +47,17 @@ export class PostDataProvider {
 
     this.db = firebase.database();
     let postRef = this.db.ref('/posts');
+    let i = 0;
 
     postRef.on('value', snapshot => {
       console.log(snapshot)
       this.postManager.initFromFirebase(snapshot);
       this.notifySubscribers();
-    });
+      if (i>0){
+        this.presentToast()};
+        i++
+    }
+    );
   }
 
 
@@ -189,6 +196,15 @@ export class PostDataProvider {
     commentChildRef.remove();
     this.notifyCommentSubscribers(postKey);
     this.notifySubscribers();
+  }
+
+  private presentToast() {
+    let toast = this.toastCtrl.create({
+      message: "Posts are just updated! Refresh to check the lateset list.",
+      duration: 4000
+    });
+    toast.present();
+  
   }
 
 }
