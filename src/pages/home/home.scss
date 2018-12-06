@@ -6,27 +6,37 @@ page-home {
         color: lightgrey;
     }
     .header{
-      background-color:#432303;
-
+      background-color:white;
+      display: block;
     }
     .content{
         background-color: #f2f2f2;
     }
-    // #test{
-    //    background-color:lightgrey;
-    // }
+.toolbar-background{
+  background-color:white;
 }
 
+}
+
+
 .my-checkbox {
-    margin: 0 30px;
+    margin: 0 10px;
     display: flex;
     align-items: center;
 }
 .nav{
     background-color:#9a7858;
-    margin: 15px 0 0 0;
+    margin: 10px 0 0 0;
+}
+.nav-bar{
+  // size:10%;
+}
+.menu-bar{
+  // background-color: #9a7858;
+   background-color:#F68E56;;
 }
 
-.menu-bar{
-  background-color: #9a7858;
+#logo{
+height:50px;
+width: auto;
 }
