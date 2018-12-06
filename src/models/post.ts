@@ -1,5 +1,7 @@
 import { Comment } from './comment';
-import { Location } from './location'
+import { Location } from './location';
+import * as moment from 'moment';
+
 
 
 export class Post {
@@ -59,6 +61,7 @@ export class Post {
     this.title = title;
   }
 
+
   public getLocation(): Location {
     return this.location;
   }
@@ -74,6 +77,18 @@ export class Post {
   public getExpiration(): string {
     return this.expiration;
   }
+
+  public getExpirationRelative(): string {
+
+    
+    let exRelative = moment(this.expiration).fromNow();
+    if (Date.parse(this.expiration) < Date.now()){
+      return "Expired: " + exRelative;
+    }
+    return "Expire: " + exRelative;
+
+  }
+
 
   public setExpiration(expiration: string): void {
     this.expiration = expiration;
