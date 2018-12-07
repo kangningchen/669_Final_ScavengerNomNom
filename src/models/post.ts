@@ -74,9 +74,9 @@ export class Post {
     return this.timestamp;
   }
 
-  public getOriginalTimestamp(): string{
+  public getOriginalTimestamp(): number{
     let original = moment(this.timestamp, "MMMM Do YYYY, h:mm:ss a")
-    return original.format("X")
+    return parseInt(original.format("X"))
   }
   public getExpiration(): string {
     return this.expiration;
