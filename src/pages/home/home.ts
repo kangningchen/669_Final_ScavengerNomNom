@@ -18,7 +18,6 @@ import { Geoposition } from '@ionic-native/geolocation';
 export class HomePage {
 
   private postList: Post[];
-  private userPostList: Post[];
   private user: any;
   private userId:string;
   private filteredList: Post[];
@@ -34,9 +33,8 @@ export class HomePage {
       this.postList = postList;
       this.filteredList = this.postList;
       this.sortPost();
+      this.locationDataService.getCurrentLocation();
     });
-    this.postDataService.getUserPostListObservable().subscribe( userPostList => {
-      this.userPostList = userPostList });
     this.postList = this.postDataService.getPostList();
     this.userId = this.userDataService.getUserId();
     this.filteredList = this.postList;
@@ -50,7 +48,7 @@ export class HomePage {
         let distance = this.filteredList[i].getLocation().calculateDistance(this.currentLat, this.currentLon);
         this.filteredList[i].setDistance(distance);
       }
-      console.log(this.filteredList);
+      console.log("Location refreshed " + this.filteredList);
     });
   }
 
