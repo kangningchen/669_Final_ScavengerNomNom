@@ -79,12 +79,16 @@ export class HomePage {
     // newest, expiration, distance
     if (this.sortBy == "newest"){
       this.filteredList.sort(function(a,b){
-        return new Date(Date.parse(b.getPostTimestamp())).getTime() - new Date(Date.parse(a.getPostTimestamp())).getTime();
+        return b.getOriginalTimestamp() - a.getOriginalTimestamp();
       });
     } else if (this.sortBy == "expiration") {
       this.filteredList.sort(function(a,b){
-        // console.log(b.expiration)
-        return new Date(Date.parse(b.getExpiration())).getTime() - new Date(Date.parse(a.getExpiration())).getTime();
+        if (new Date(Date.parse(a.getExpiration())).getTime() < Date.now()){
+          return 1;
+        } else if (new Date(Date.parse(b.getExpiration())).getTime() < Date.now()){
+          return -1;
+        }
+        return new Date(Date.parse(a.getExpiration())).getTime() - new Date(Date.parse(b.getExpiration())).getTime();
       });
     } else if (this.sortBy == "distance") {
       this.filteredList.sort(function(a,b){
