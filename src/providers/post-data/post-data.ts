@@ -54,8 +54,9 @@ export class PostDataProvider {
       this.postManager.initFromFirebase(snapshot);
       this.notifySubscribers();
       if (i>0){
-        this.presentToast()};
-        i++
+        this.presentToast()
+      };
+      i++;
     }
     );
   }
@@ -84,12 +85,12 @@ export class PostDataProvider {
 
   private notifySubscribers(): void {
     let postList = this.postManager.getPostList();
+    
     this.postObserver.next(postList);
   }
 
   private notifyUserPostListSubscribers(userId:string): void {
     let userPostList = this.postManager.getPostByUserId(userId);
-
     this.userPostListObserver.next(userPostList);
   }
 
