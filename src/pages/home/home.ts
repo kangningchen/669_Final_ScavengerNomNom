@@ -21,6 +21,7 @@ export class HomePage {
   private user: any;
   private userId:string;
   private filteredList: Post[];
+  private userPostList: Post[];
   public aColor: string = "#f9f9f9";
   private currentLat: number;
   private currentLon: number;
@@ -37,6 +38,8 @@ export class HomePage {
     });
     this.postList = this.postDataService.getPostList();
     this.userId = this.userDataService.getUserId();
+    this.postDataService.getUserPostListObservable().subscribe( userPostList => {
+      this.userPostList = userPostList });
     this.filteredList = this.postList;
     this.locationDataService.getObservable().subscribe(newLocation => {
       if (newLocation === undefined || this.filteredList === undefined){

@@ -85,7 +85,6 @@ export class PostDataProvider {
 
   private notifySubscribers(): void {
     let postList = this.postManager.getPostList();
-    
     this.postObserver.next(postList);
   }
 
