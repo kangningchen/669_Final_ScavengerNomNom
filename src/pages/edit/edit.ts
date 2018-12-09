@@ -44,6 +44,9 @@ export class EditPage {
       this.post = this.postDataService.getPost(this.postKey);
       this.image = this.post.getPostImage();
       this.location = this.post.getLocation();
+      if (this.location != undefined){
+        this.roomNumber = this.location.getRoomNumber();
+      }
       this.autocompleteInput = this.location.getDescription();
       this.GoogleAutocomplete = new google.maps.places.AutocompleteService();
       this.geocoder = new google.maps.Geocoder;
